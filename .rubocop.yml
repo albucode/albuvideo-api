@@ -11,3 +11,7 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+
+Metrics:
+  Exclude:
+    - db/migrate/*
