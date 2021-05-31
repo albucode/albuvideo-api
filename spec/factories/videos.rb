@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :video do
     title { Faker::Movie.title }
-    published { Faker::Boolean.boolean }
+    published { true }
     status { 'ready' }
     source { Faker::Internet.url }
   end
