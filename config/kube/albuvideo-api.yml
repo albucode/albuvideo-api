@@ -1,0 +1,43 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: albuvideo-api-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: albuvideo-api
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: albuvideo-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: albuvideo-api
+  template:
+    metadata:
+      labels:
+        app: albuvideo-api
+    spec:
+      containers:
+        - name: albuvideo-api
+          imagePullPolicy: Always
+          image: registry.digitalocean.com/albucode/albuvideo-api:latest
+          args: ["rails", "server"]
+          env:
+            - name: RAILS_LOG_TO_STDOUT
+              value: "true"
+            - name: RAILS_ENV
+              value: "production"
+            - name: SECRET_KEY_BASE
+              value: "production-key"
+          ports:
+            - containerPort: 3000
+              protocol: TCP
