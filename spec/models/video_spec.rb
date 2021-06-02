@@ -20,4 +20,11 @@ RSpec.describe Video, type: :model do
   it { is_expected.to validate_uniqueness_of(:public_id) }
 
   it { is_expected.to validate_length_of(:public_id).is_equal_to(10) }
+
+  it 'does not change an existing public_id' do
+    video.save!
+    loaded_video = Video.find(video.id)
+
+    expect(video.public_id).to eq(loaded_video.public_id)
+  end
 end
