@@ -26,14 +26,17 @@ class Api::VideosController < ApplicationController
     if @video.destroy
       render json: {}
     else
-      render json: { message: 'This video could not be deleted' }
+      render(
+        json: { errors: @video.errors.full_messages },
+        status: :unprocessable_entity
+      )
     end
   end
 
   private
 
   def find_video
-    @video = Video.find_by(public_id: params[:id])
+    @video = Video.find_by!(public_id: params[:id])
   end
 
   def video_params
