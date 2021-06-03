@@ -2,6 +2,6 @@
 
 Rails.application.routes.draw do
   namespace :api do
-    resources :videos, only: %i[index show destroy]
+    resources :videos, only: %i[index show destroy create]
   end
 end
