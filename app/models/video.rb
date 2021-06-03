@@ -7,7 +7,9 @@ class Video < ApplicationRecord
 
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing
 
-  validates :published, :source, :status, :public_id, presence: true
+  validates :source, :status, :public_id, presence: true
+
+  validates :published, inclusion: { in: [true, false]}
 
   validates :public_id, uniqueness: true
 
