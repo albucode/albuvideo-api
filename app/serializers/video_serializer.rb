@@ -1,5 +1,5 @@
 class VideoSerializer < ActiveModel::Serializer
-  attributes :title, :status, :published, :source, :id
+  attributes   :id, :title, :status, :published, :source
 
   def id
     object.public_id
