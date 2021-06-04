@@ -9,7 +9,7 @@ class Video < ApplicationRecord
 
   validates :source, :status, :public_id, presence: true
 
-  validates :published, inclusion: { in: [true, false]}
+  validates :published, inclusion: { in: [true, false] }
 
   validates :public_id, uniqueness: true
 
