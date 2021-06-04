@@ -8,9 +8,7 @@ RSpec.describe Video, type: :model do
   it ' has a valid factory' do
     expect(video.validate!).to eq(true)
   end
-
-  it { is_expected.to validate_inclusion_of(:published).in_array([true, false]) }
-
+  
   it { is_expected.to validate_presence_of(:source) }
 
   it { is_expected.to validate_presence_of(:status) }
