@@ -1,4 +1,4 @@
-class Api::VideosController < ApplicationController
+class VideosController < ApplicationController
   before_action :find_video, except: %i[index create]
 
   def create

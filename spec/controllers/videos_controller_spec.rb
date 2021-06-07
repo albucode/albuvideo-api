@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::VideosController, type: :controller do
+RSpec.describe VideosController, type: :controller do
   describe 'video creation' do
     context 'with valid params' do
       let(:valid_request) do
