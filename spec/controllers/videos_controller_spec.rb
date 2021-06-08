@@ -26,6 +26,11 @@ RSpec.describe VideosController, type: :controller do
           valid_request
         end.to change(Video, :count).by(1)
       end
+
+      it "video user_id matches current_user's id" do
+        valid_request
+        expect(Video.last.user_id).to match(user.id)
+      end
     end
 
     context 'with invalid params' do
@@ -42,6 +47,27 @@ RSpec.describe VideosController, type: :controller do
         response = invalid_request
         body = JSON.parse(response.body)
         expect(body).to match({ 'errors' => ['Source can\'t be blank', 'Published is not included in the list'] })
+      end
+    end
+  end
+
+  describe 'video deletion' do
+    context "another user's video" do
+      subject(:video) { FactoryBot.create(:video, user_id: user2.id) }
+
+      let(:user2) { FactoryBot.create(:user) }
+      let(:invalid_request) do
+        delete :destroy, params: { id: video.public_id }
+      end
+
+      before do
+        sign_in(user)
+      end
+
+      it 'matches an error message' do
+        response = invalid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'Not authorized' })
       end
     end
   end
