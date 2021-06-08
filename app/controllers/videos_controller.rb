@@ -1,5 +1,6 @@
 class VideosController < ApplicationController
   before_action :find_video, except: %i[index create]
+  before_action :authenticate_user!
 
   def create
     video = Video.new video_params
