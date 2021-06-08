@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-    resources :videos, only: %i[index show destroy create]
+  devise_for :users
+
+  resource :current_user, only: :show, controller: :current_user
+  resources :videos, only: %i[index show destroy create]
 end
