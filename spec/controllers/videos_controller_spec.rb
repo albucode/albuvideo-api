@@ -3,7 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe VideosController, type: :controller do
+
+  subject(:user) { FactoryBot.create(:user) }
+
   describe 'video creation' do
+
+    before(:each) do
+      sign_in(user)
+    end
+
     context 'with valid params' do
       let(:valid_request) do
         post :create, params: { "video": { "title": 'VideoTitle', "published": false, "source": 'testsource' } },
