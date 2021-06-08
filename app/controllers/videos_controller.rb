@@ -49,9 +49,6 @@ class VideosController < ApplicationController
   end
 
   def is_own_video?
-    unless @video.user_id == current_user.id
-      return render json: {error: "Not authorized" }
-    end
+    render json: { error: 'Not authorized' } unless @video.user_id == current_user.id
   end
-
 end

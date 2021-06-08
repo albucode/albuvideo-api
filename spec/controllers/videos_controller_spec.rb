@@ -3,12 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe VideosController, type: :controller do
-
   subject(:user) { FactoryBot.create(:user) }
 
   describe 'video creation' do
-
-    before(:each) do
+    before do
       sign_in(user)
     end
 
