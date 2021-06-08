@@ -3,22 +3,23 @@
 class VideosController < ApplicationController
   before_action :find_video, except: %i[index create]
   before_action :authenticate_user!
+  before_action :is_own_video?, except: %i[index create]
 
   def create
-    video = Video.new video_params
-    video.user_id = current_user.id
-    if video.save
-      render json: video, status: :created
+    @video = Video.new video_params
+    @video.user_id = current_user.id
+    if @video.save
+      render json: @video, status: :created
     else
       render(
-        json: { errors: video.errors.full_messages },
+        json: { errors: @video.errors.full_messages },
         status: :unprocessable_entity
       )
     end
   end
 
   def index
-    videos = Video.all
+    videos = Video.where(user_id: current_user.id)
     render json: videos
   end
 
@@ -46,4 +47,11 @@ class VideosController < ApplicationController
   def video_params
     params.require(:video).permit(:title, :published, :source)
   end
+
+  def is_own_video?
+    unless @video.user_id == current_user.id
+      return render json: {error: "Not authorized" }
+    end
+  end
+
 end
