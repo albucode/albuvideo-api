@@ -4,6 +4,7 @@ class VideosController < ApplicationController
 
   def create
     video = Video.new video_params
+    video.user_id = current_user.id
     if video.save
       render json: video, status: :created
     else
