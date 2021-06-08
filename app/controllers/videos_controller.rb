@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VideosController < ApplicationController
   before_action :find_video, except: %i[index create]
   before_action :authenticate_user!

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUserRefToVideos < ActiveRecord::Migration[6.1]
   def change
     add_reference :videos, :user, null: false, foreign_key: true

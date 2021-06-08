@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VideoSerializer < ActiveModel::Serializer
   attributes :id, :title, :status, :published, :source
 
