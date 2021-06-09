@@ -8,7 +8,7 @@ RSpec.describe Video, type: :model do
   it ' has a valid factory' do
     expect(video.validate!).to eq(true)
   end
-  
+
   it { is_expected.to validate_presence_of(:source) }
 
   it { is_expected.to validate_presence_of(:status) }
@@ -21,7 +21,7 @@ RSpec.describe Video, type: :model do
 
   it 'does not change an existing public_id' do
     video.save!
-    loaded_video = Video.find(video.id)
+    loaded_video = described_class.find(video.id)
 
     expect(video.public_id).to eq(loaded_video.public_id)
   end

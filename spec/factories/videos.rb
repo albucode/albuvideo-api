@@ -6,5 +6,6 @@ FactoryBot.define do
     published { true }
     status { 'ready' }
     source { Faker::Internet.url }
+    user
   end
 end
