@@ -52,7 +52,7 @@ RSpec.describe VideosController, type: :controller do
   end
 
   describe 'video deletion' do
-    context "another user's video" do
+    context "when the video belong to another user" do
       subject(:video) { FactoryBot.create(:video, user_id: user2.id) }
 
       let(:user2) { FactoryBot.create(:user) }

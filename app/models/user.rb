@@ -5,5 +5,5 @@ class User < ApplicationRecord
   # :recoverable, :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :validatable
 
-  has_many :videos
+  has_many :videos, dependent: :destroy
 end
