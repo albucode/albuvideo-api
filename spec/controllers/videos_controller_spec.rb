@@ -52,7 +52,7 @@ RSpec.describe VideosController, type: :controller do
   end
 
   describe 'video deletion' do
-    context "when the video belong to another user" do
+    context 'when video belongs to another user' do
       subject(:video) { FactoryBot.create(:video, user_id: user2.id) }
 
       let(:user2) { FactoryBot.create(:user) }
@@ -64,10 +64,8 @@ RSpec.describe VideosController, type: :controller do
         sign_in(user)
       end
 
-      it 'matches an error message' do
-        response = invalid_request
-        body = JSON.parse(response.body)
-        expect(body).to match({ 'error' => 'Not authorized' })
+      it 'raises ActiveRedor::Record Not Found exception' do
+        expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end

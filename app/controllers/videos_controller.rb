@@ -3,7 +3,6 @@
 class VideosController < ApplicationController
   before_action :find_video, except: %i[index create]
   before_action :authenticate_user!
-  before_action :is_own_video?, except: %i[index create]
 
   def create
     @video = Video.new video_params
@@ -41,14 +40,10 @@ class VideosController < ApplicationController
   private
 
   def find_video
-    @video = Video.find_by!(public_id: params[:id])
+    @video = Video.find_by!(public_id: params[:id], user: current_user)
   end
 
   def video_params
     params.require(:video).permit(:title, :published, :source)
-  end
-
-  def is_own_video?
-    render json: { error: 'Not authorized' } unless @video.user_id == current_user.id
   end
 end
