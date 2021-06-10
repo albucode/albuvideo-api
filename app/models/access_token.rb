@@ -11,7 +11,7 @@ class AccessToken < ApplicationRecord
     self.access_token = SecureRandom.alphanumeric(32) if access_token.nil?
   end
 
-  validates :access_token, :public_id, presence: true
+  validates :access_token, :public_id, :name, presence: true
 
   validates :access_token, :public_id, uniqueness: true
 
