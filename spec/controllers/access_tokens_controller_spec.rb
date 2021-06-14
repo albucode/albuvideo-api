@@ -15,12 +15,12 @@ RSpec.describe AccessTokensController, type: :controller do
         post :create, params: { "access_token": { "name": 'MyAccessToken' } }, as: :json
       end
 
-      it 'returns a 200' do
+      it 'returns a 201' do
         valid_request
         expect(response).to have_http_status(:created)
       end
 
-      it 'creates a new access_token ' do
+      it 'creates a new access_token' do
         expect do
           valid_request
         end.to change(AccessToken, :count).by(1)
@@ -63,7 +63,7 @@ RSpec.describe AccessTokensController, type: :controller do
         sign_in(user)
       end
 
-      it 'raises ActiveRedor::Record Not Found exception' do
+      it 'raises ActiveRedor::RecordNotFoundexception' do
         expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
