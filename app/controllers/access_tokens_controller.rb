@@ -5,13 +5,13 @@ class AccessTokensController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @access_token = AccessToken.new access_token_params
-    @access_token.user_id = current_user.id
-    if @access_token.save
-      render json: @access_token, status: :created
+    access_token = AccessToken.new access_token_params
+    access_token.user_id = current_user.id
+    if access_token.save
+      render json: access_token, status: :created
     else
       render(
-        json: { errors: @access_token.errors.full_messages },
+        json: { errors: access_token.errors.full_messages },
         status: :unprocessable_entity
       )
     end
