@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_06_09_230920) do
   enable_extension "plpgsql"
 
   create_table "access_tokens", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "access_token", limit: 32, null: false
     t.string "public_id", limit: 10, null: false
     t.bigint "user_id", null: false
