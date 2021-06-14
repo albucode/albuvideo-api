@@ -2,9 +2,7 @@
 
 FactoryBot.define do
   factory :signature_key do
-    name { 'MyString' }
-    signature_key { 'MyString' }
-    public_id { 'MyString' }
-    user { nil }
+    name { 'MySignatureKey' }
+    user
   end
 end
