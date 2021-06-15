@@ -57,8 +57,8 @@ ActiveRecord::Schema.define(version: 2021_06_15_014337) do
 
   create_table "segments", force: :cascade do |t|
     t.bigint "variant_id", null: false
-    t.integer "position"
-    t.float "duration"
+    t.integer "position", null: false
+    t.float "duration", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position", "variant_id"], name: "index_segments_on_position_and_variant_id", unique: true
@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(version: 2021_06_15_014337) do
 
   create_table "variants", force: :cascade do |t|
     t.bigint "video_id", null: false
-    t.string "public_id"
-    t.integer "height"
-    t.integer "width"
-    t.integer "bitrate"
+    t.string "public_id", null: false
+    t.integer "height", null: false
+    t.integer "width", null: false
+    t.integer "bitrate", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["public_id"], name: "index_variants_on_public_id", unique: true
