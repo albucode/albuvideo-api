@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_14_224502) do
+ActiveRecord::Schema.define(version: 2021_06_15_014337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 2021_06_14_224502) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "segments", force: :cascade do |t|
+    t.bigint "variant_id", null: false
+    t.integer "position", null: false
+    t.float "duration", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position", "variant_id"], name: "index_segments_on_position_and_variant_id", unique: true
+    t.index ["variant_id"], name: "index_segments_on_variant_id"
+  end
+
   create_table "signature_keys", force: :cascade do |t|
     t.string "name", null: false
     t.string "signature_key", limit: 64, null: false
@@ -76,6 +86,18 @@ ActiveRecord::Schema.define(version: 2021_06_14_224502) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "variants", force: :cascade do |t|
+    t.bigint "video_id", null: false
+    t.string "public_id", null: false
+    t.integer "height", null: false
+    t.integer "width", null: false
+    t.integer "bitrate", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["public_id"], name: "index_variants_on_public_id", unique: true
+    t.index ["video_id"], name: "index_variants_on_video_id"
+  end
+
   create_table "videos", force: :cascade do |t|
     t.string "title"
     t.boolean "published"
@@ -92,6 +114,8 @@ ActiveRecord::Schema.define(version: 2021_06_14_224502) do
   add_foreign_key "access_tokens", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "segments", "variants"
   add_foreign_key "signature_keys", "users"
+  add_foreign_key "variants", "videos"
   add_foreign_key "videos", "users"
 end
