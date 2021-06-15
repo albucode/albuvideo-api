@@ -63,7 +63,7 @@ RSpec.describe AccessTokensController, type: :controller do
         sign_in(user)
       end
 
-      it 'raises ActiveRedor::RecordNotFoundexception' do
+      it 'raises ActiveRecord::RecordNotFoundexception' do
         expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end

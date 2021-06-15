@@ -39,7 +39,7 @@ class SignatureKeysController < ApplicationController
 
   def update
     if @signature_key.update signature_key_params
-      render json: @signature_key, status: :ok
+      render json: @signature_key
     else
       render(
         json: { errors: @signature_key.errors.full_messages },
