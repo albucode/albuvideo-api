@@ -2,17 +2,17 @@
 
 require 'rails_helper'
 
-RSpec.describe AccessTokensController, type: :controller do
+RSpec.describe SignatureKeysController, type: :controller do
   subject(:user) { FactoryBot.create(:user) }
 
-  describe 'access token creation' do
+  describe 'signature keys creation' do
     before do
       sign_in(user)
     end
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { "access_token": { "name": 'MyAccessToken' } }, as: :json
+        post :create, params: { "signature_key": { "name": 'MySignatureKey' } }, as: :json
       end
 
       it 'returns a 201' do
@@ -20,21 +20,21 @@ RSpec.describe AccessTokensController, type: :controller do
         expect(response).to have_http_status(:created)
       end
 
-      it 'creates a new access_token' do
+      it 'creates a new signature_key' do
         expect do
           valid_request
-        end.to change(AccessToken, :count).by(1)
+        end.to change(SignatureKey, :count).by(1)
       end
 
-      it "access_token user_id matches current_user's id" do
+      it "signature_key user_id matches current_user's id" do
         valid_request
-        expect(AccessToken.last.user_id).to match(user.id)
+        expect(SignatureKey.last.user_id).to match(user.id)
       end
     end
 
     context 'with invalid params' do
       let(:invalid_request) do
-        post :create, params: { "access_token": { "name": '' } }, as: :json
+        post :create, params: { "signature_key": { "name": '' } }, as: :json
       end
 
       it 'returns a 422' do
@@ -50,13 +50,13 @@ RSpec.describe AccessTokensController, type: :controller do
     end
   end
 
-  describe 'access_token deletion' do
-    context 'when access_token belongs to another user' do
-      subject(:access_token) { FactoryBot.create(:access_token, user_id: user2.id) }
+  describe 'signature_key deletion' do
+    context 'when signature_key belongs to another user' do
+      subject(:signature_key) { FactoryBot.create(:signature_key, user_id: user2.id) }
 
       let(:user2) { FactoryBot.create(:user) }
       let(:invalid_request) do
-        delete :destroy, params: { id: access_token.public_id }
+        delete :destroy, params: { id: signature_key.public_id }
       end
 
       before do
@@ -69,20 +69,20 @@ RSpec.describe AccessTokensController, type: :controller do
     end
   end
 
-  describe 'access token update' do
+  describe 'signature_key update' do
     before do
       sign_in(user)
     end
 
     context 'with valid params' do
-      subject(:access_token) { FactoryBot.create(:access_token, user_id: user.id) }
+      subject(:signature_key) { FactoryBot.create(:signature_key, user_id: user.id) }
 
       let(:valid_request) do
-        put :update, params: { id: access_token.public_id, "access_token": { "name": 'MyAccessTokenUpdate' } }
+        put :update, params: { id: signature_key.public_id, "signature_key": { "name": 'MySignatureKeyUpdate' } }
       end
 
       let(:invalid_request) do
-        put :update, params: { id: access_token.public_id, "access_token": { "access_token": 'NewAccessToken' } }
+        put :update, params: { id: signature_key.public_id, "signature_key": { "signature_key": 'NewSignatureKey' } }
       end
 
       it 'returns a 200' do
@@ -90,23 +90,23 @@ RSpec.describe AccessTokensController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'changes the access_token name ' do
+      it 'changes the signature_key name' do
         valid_request
-        expect(access_token.reload.name).to eq('MyAccessTokenUpdate')
+        expect(signature_key.reload.name).to eq('MySignatureKeyUpdate')
       end
 
-      it 'does not change an existing access_token' do
+      it 'does not change an existing signature_key' do
         invalid_request
 
-        expect(access_token.access_token).to eq(access_token.reload.access_token)
+        expect(signature_key.signature_key).to eq(signature_key.reload.signature_key)
       end
     end
 
     context 'with invalid params' do
-      subject(:access_token) { FactoryBot.create(:access_token, user_id: user.id) }
+      subject(:signature_key) { FactoryBot.create(:signature_key, user_id: user.id) }
 
       let(:invalid_request) do
-        put :update, params: { id: access_token.public_id, "access_token": { "name": '' } }
+        put :update, params: { id: signature_key.public_id, "signature_key": { "name": '' } }
       end
 
       it 'returns a 422' do
