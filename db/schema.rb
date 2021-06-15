@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_15_010628) do
+ActiveRecord::Schema.define(version: 2021_06_15_014337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(version: 2021_06_15_010628) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "segments", force: :cascade do |t|
+    t.bigint "variant_id", null: false
+    t.integer "position"
+    t.float "duration"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position", "variant_id"], name: "index_segments_on_position_and_variant_id", unique: true
+    t.index ["variant_id"], name: "index_segments_on_variant_id"
   end
 
   create_table "signature_keys", force: :cascade do |t|
@@ -104,6 +114,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_010628) do
   add_foreign_key "access_tokens", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "segments", "variants"
   add_foreign_key "signature_keys", "users"
   add_foreign_key "variants", "videos"
   add_foreign_key "videos", "users"

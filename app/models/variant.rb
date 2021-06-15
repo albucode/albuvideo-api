@@ -2,6 +2,7 @@
 
 class Variant < ApplicationRecord
   belongs_to :video
+  has_many :segments, dependent: :destroy
 
   after_initialize do
     self.public_id = SecureRandom.alphanumeric(10) if public_id.nil?
