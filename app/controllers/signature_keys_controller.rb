@@ -18,7 +18,7 @@ class SignatureKeysController < ApplicationController
   end
 
   def index
-    signature_keys = SignatureKey.where(user_id: current_user.id)
+    signature_keys = SignatureKey.where(user_id: current_user.id).order(created_at: :desc)
     render json: signature_keys
   end
 

@@ -18,7 +18,7 @@ class AccessTokensController < ApplicationController
   end
 
   def index
-    access_tokens = AccessToken.where(user_id: current_user.id)
+    access_tokens = AccessToken.where(user_id: current_user.id).order(created_at: :desc)
     render json: access_tokens
   end
 

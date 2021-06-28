@@ -18,7 +18,7 @@ class VideosController < ApplicationController
   end
 
   def index
-    videos = Video.where(user_id: current_user.id)
+    videos = Video.where(user_id: current_user.id).order(created_at: :desc)
     render json: videos
   end
 
