@@ -100,9 +100,11 @@ ActiveRecord::Schema.define(version: 2021_06_29_213026) do
 
   create_table "video_watch_events", force: :cascade do |t|
     t.bigint "video_id", null: false
+    t.bigint "user_id", null: false
     t.float "duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_video_watch_events_on_user_id"
     t.index ["video_id"], name: "index_video_watch_events_on_video_id"
   end
 
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_213026) do
   add_foreign_key "segments", "variants"
   add_foreign_key "signature_keys", "users"
   add_foreign_key "variants", "videos"
+  add_foreign_key "video_watch_events", "users"
   add_foreign_key "video_watch_events", "videos"
   add_foreign_key "videos", "users"
 end

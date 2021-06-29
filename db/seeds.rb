@@ -12,5 +12,5 @@ user = User.create({ email: 'a@a.com', password: 'asdasdasd' })
 video = Video.create({ title: 'Video1', published: true, source: 'sourceseed', user_id: user.id })
 
 (1..3).map do
-  VideoWatchEvent.create({ duration: 2.5, video_id: video.id })
+  VideoWatchEvent.create({ duration: 2.5, video_id: video.id, user_id: user.id })
 end
