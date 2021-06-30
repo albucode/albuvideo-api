@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :access_tokens
   resources :signature_keys
   resources :stats
+  get 'total_watch_time' => 'stats#total_watch_time'
 end
