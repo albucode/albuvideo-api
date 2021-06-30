@@ -7,6 +7,5 @@ Rails.application.routes.draw do
   resources :videos, only: %i[index show destroy create]
   resources :access_tokens
   resources :signature_keys
-  resources :stats
   get 'total_watch_time' => 'stats#total_watch_time'
 end
