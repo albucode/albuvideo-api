@@ -9,8 +9,10 @@ RSpec.describe VideoWatchEvent, type: :model do
     expect(video_watch_event.validate!).to eq(true)
   end
 
+  it { is_expected.to validate_numericality_of(:duration).is_greater_than(0) }
+
   describe 'associations' do
-    it { is_expected.to belong_to(:video).class_name('Video') }
-    it { is_expected.to belong_to(:user).class_name('User') }
+    it { is_expected.to belong_to(:video) }
+    it { is_expected.to belong_to(:user) }
   end
 end

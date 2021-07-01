@@ -8,7 +8,7 @@ RSpec.describe StatsController, type: :controller do
   let(:video) { FactoryBot.create(:video) }
 
   let(:video_watch_event) { FactoryBot.create(:video_watch_event, video_id: video.id, user_id: user.id) }
-  let(:video_watch_event2) { FactoryBot.create(:video_watch_event, video_id: video.id, user_id: user.id, duration: 2) }
+  let(:video_watch_event_2) { FactoryBot.create(:video_watch_event, video_id: video.id, user_id: user.id, duration: 2) }
 
   describe 'get total watch time' do
     before do
@@ -16,12 +16,12 @@ RSpec.describe StatsController, type: :controller do
     end
 
     let(:request) do
-      get :total_watch_time, as: :json
+      get :show, as: :json
     end
 
     it 'returns a the sum of all duration for user\'s video watch time' do
       video_watch_event
-      video_watch_event2
+      video_watch_event_2
       body = JSON.parse(request.body)
       expect(body).to match({ 'stats' => { 'time_watched' => 4 } })
     end
