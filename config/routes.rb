@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   resources :videos, only: %i[index show destroy create]
   resources :access_tokens
   resources :signature_keys
+  resource :stats, only: :show
 end

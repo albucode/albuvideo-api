@@ -5,6 +5,7 @@ class Video < ApplicationRecord
 
   belongs_to :user
   has_many :variants, dependent: :destroy
+  has_many :video_watch_events, dependent: :destroy
 
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing
 
