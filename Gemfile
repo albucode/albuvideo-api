@@ -9,6 +9,8 @@ gem 'devise'
 gem 'foreman'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
+
+gem 'down', '~> 5.0'
 gem 'rack-cors'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'rails_same_site_cookie'
