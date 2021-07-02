@@ -12,7 +12,8 @@ RSpec.describe VideosController, type: :controller do
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { video: { title: 'VideoTitle', published: false, source: 'testsource' } },
+        source = 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4'
+        post :create, params: { video: { title: 'VideoTitle', published: false, source: source } },
                       as: :json
       end
 
