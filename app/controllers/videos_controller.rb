@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'down'
+
 class VideosController < ApplicationController
   before_action :find_video, except: %i[index create]
   before_action :authenticate_user!
@@ -8,6 +10,8 @@ class VideosController < ApplicationController
     @video = Video.new video_params
     @video.user_id = current_user.id
     if @video.save
+      tempfile = Down.download(@video.source)
+      @video.source_file.attach(io: tempfile, filename: 'albukao.mp4')
       render json: @video, status: :created
     else
       render(
