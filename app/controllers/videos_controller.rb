@@ -7,15 +7,17 @@ class VideosController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @video = Video.new video_params
-    @video.user_id = current_user.id
-    if @video.save
-      tempfile = Down.download(@video.source)
-      @video.source_file.attach(io: tempfile, filename: 'albukao.mp4')
-      render json: @video, status: :created
+    video = Video.new video_params
+    video.user_id = current_user.id
+    if video.save
+      tempfile = Down.download(video.source)
+      video.source_file.attach(io: tempfile, filename: 'albukao.mp4')
+      File.delete(tempfile.path)
+
+      render json: video, status: :created
     else
       render(
-        json: { errors: @video.errors.full_messages },
+        json: { errors: video.errors.full_messages },
         status: :unprocessable_entity
       )
     end
