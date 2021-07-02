@@ -12,7 +12,7 @@ RSpec.describe VideosController, type: :controller do
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { "video": { "title": 'VideoTitle', "published": false, "source": 'testsource' } },
+        post :create, params: { video: { title: 'VideoTitle', published: false, source: 'testsource' } },
                       as: :json
       end
 
@@ -35,7 +35,7 @@ RSpec.describe VideosController, type: :controller do
 
     context 'with invalid params' do
       let(:invalid_request) do
-        post :create, params: { "video": { "published": '', "source": '' } }, as: :json
+        post :create, params: { video: { published: '', source: '' } }, as: :json
       end
 
       it 'returns a 422' do
