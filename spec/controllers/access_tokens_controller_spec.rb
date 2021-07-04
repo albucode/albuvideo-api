@@ -12,7 +12,7 @@ RSpec.describe AccessTokensController, type: :controller do
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { "access_token": { "name": 'MyAccessToken' } }, as: :json
+        post :create, params: { access_token: { name: 'MyAccessToken' } }, as: :json
       end
 
       it 'returns a 201' do
@@ -34,7 +34,7 @@ RSpec.describe AccessTokensController, type: :controller do
 
     context 'with invalid params' do
       let(:invalid_request) do
-        post :create, params: { "access_token": { "name": '' } }, as: :json
+        post :create, params: { access_token: { name: '' } }, as: :json
       end
 
       it 'returns a 422' do
@@ -78,11 +78,11 @@ RSpec.describe AccessTokensController, type: :controller do
       subject(:access_token) { FactoryBot.create(:access_token, user_id: user.id) }
 
       let(:valid_request) do
-        put :update, params: { id: access_token.public_id, "access_token": { "name": 'MyAccessTokenUpdate' } }
+        put :update, params: { id: access_token.public_id, access_token: { name: 'MyAccessTokenUpdate' } }
       end
 
       let(:invalid_request) do
-        put :update, params: { id: access_token.public_id, "access_token": { "access_token": 'NewAccessToken' } }
+        put :update, params: { id: access_token.public_id, access_token: { access_token: 'NewAccessToken' } }
       end
 
       it 'returns a 200' do
@@ -106,7 +106,7 @@ RSpec.describe AccessTokensController, type: :controller do
       subject(:access_token) { FactoryBot.create(:access_token, user_id: user.id) }
 
       let(:invalid_request) do
-        put :update, params: { id: access_token.public_id, "access_token": { "name": '' } }
+        put :update, params: { id: access_token.public_id, access_token: { name: '' } }
       end
 
       it 'returns a 422' do

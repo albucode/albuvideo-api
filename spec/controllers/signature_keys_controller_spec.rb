@@ -12,7 +12,7 @@ RSpec.describe SignatureKeysController, type: :controller do
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { "signature_key": { "name": 'MySignatureKey' } }, as: :json
+        post :create, params: { signature_key: { name: 'MySignatureKey' } }, as: :json
       end
 
       it 'returns a 201' do
@@ -34,7 +34,7 @@ RSpec.describe SignatureKeysController, type: :controller do
 
     context 'with invalid params' do
       let(:invalid_request) do
-        post :create, params: { "signature_key": { "name": '' } }, as: :json
+        post :create, params: { signature_key: { name: '' } }, as: :json
       end
 
       it 'returns a 422' do
@@ -78,11 +78,11 @@ RSpec.describe SignatureKeysController, type: :controller do
       subject(:signature_key) { FactoryBot.create(:signature_key, user_id: user.id) }
 
       let(:valid_request) do
-        put :update, params: { id: signature_key.public_id, "signature_key": { "name": 'MySignatureKeyUpdate' } }
+        put :update, params: { id: signature_key.public_id, signature_key: { name: 'MySignatureKeyUpdate' } }
       end
 
       let(:invalid_request) do
-        put :update, params: { id: signature_key.public_id, "signature_key": { "signature_key": 'NewSignatureKey' } }
+        put :update, params: { id: signature_key.public_id, signature_key: { signature_key: 'NewSignatureKey' } }
       end
 
       it 'returns a 200' do
@@ -106,7 +106,7 @@ RSpec.describe SignatureKeysController, type: :controller do
       subject(:signature_key) { FactoryBot.create(:signature_key, user_id: user.id) }
 
       let(:invalid_request) do
-        put :update, params: { id: signature_key.public_id, "signature_key": { "name": '' } }
+        put :update, params: { id: signature_key.public_id, signature_key: { name: '' } }
       end
 
       it 'returns a 422' do
