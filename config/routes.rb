@@ -8,4 +8,9 @@ Rails.application.routes.draw do
   resources :access_tokens
   resources :signature_keys
   resource :stats, only: :show
+
+  if Rails.env.development?
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
