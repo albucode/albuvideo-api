@@ -9,5 +9,7 @@ class AttachSourceFile
     extension = File.extname(path)
     video.source_file.attach(io: tempfile, filename: "#{video.public_id}#{extension}")
     File.delete(path)
+
+    TranscodeSourceFileJob.perform_later(video.id)
   end
 end
