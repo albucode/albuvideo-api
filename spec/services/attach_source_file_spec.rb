@@ -10,4 +10,12 @@ RSpec.describe AttachSourceFile do
 
     expect(video.source_file).to be_present
   end
+
+  it 'enqueues a TranscodeSourceFileJob' do
+    ActiveJob::Base.queue_adapter = :test
+
+    described_class.perform(video)
+
+    expect(TranscodeSourceFileJob).to have_been_enqueued.exactly(:once)
+  end
 end
