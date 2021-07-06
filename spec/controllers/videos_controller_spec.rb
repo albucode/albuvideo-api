@@ -33,12 +33,12 @@ RSpec.describe VideosController, type: :controller do
         expect(Video.last.user_id).to match(user.id)
       end
 
-      it 'attaches a source_file to a new video' do
-        allow(AttachSourceFile).to receive(:perform)
+      it 'enqueues a AttachSourceFileJob' do
+        ActiveJob::Base.queue_adapter = :test
 
         valid_request
 
-        expect(AttachSourceFile).to have_received(:perform)
+        expect(AttachSourceFileJob).to have_been_enqueued.exactly(:once)
       end
     end
 

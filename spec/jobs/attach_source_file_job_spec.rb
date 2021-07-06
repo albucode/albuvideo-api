@@ -3,5 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe AttachSourceFileJob, type: :job do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:video) { FactoryBot.create(:video) }
+
+  it 'attaches a source_file to a new video' do
+    allow(AttachSourceFile).to receive(:perform)
+
+    described_class.new.perform(video.id)
+
+    expect(AttachSourceFile).to have_received(:perform)
+  end
 end
