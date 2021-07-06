@@ -11,7 +11,7 @@ class VideosController < ApplicationController
     video.user_id = current_user.id
     if video.save
       tempfile = Down.download(video.source)
-      video.source_file.attach(io: tempfile, filename: 'albukao.mp4')
+      video.source_file.attach(io: tempfile, filename: "#{video.public_id}#{File.extname(tempfile.path)}")
       File.delete(tempfile.path)
 
       render json: video, status: :created
