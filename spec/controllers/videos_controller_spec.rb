@@ -32,6 +32,14 @@ RSpec.describe VideosController, type: :controller do
         valid_request
         expect(Video.last.user_id).to match(user.id)
       end
+
+      it 'attaches a source_file to a new video' do
+        allow(AttachSourceFile).to receive(:perform)
+
+        valid_request
+
+        expect(AttachSourceFile).to have_received(:perform)
+      end
     end
 
     context 'with invalid params' do
