@@ -11,7 +11,8 @@ class TranscodeSourceFile
 
       transcoded_file = File.open(output_file_path)
 
-      variant.transcoded_file.attach(io: transcoded_file, filename: "#{video.public_id}.mp4")
+      variant.transcoded_file.attach(io: transcoded_file, filename: "#{variant.public_id}.mp4")
+      File.delete(transcoded_file.path)
     end
   end
 end

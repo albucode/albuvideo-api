@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe TranscodeSourceFile do
   let(:video) { FactoryBot.create(:video) }
 
-  it 'attaches a transcoded_file to a video' do
+  it 'attaches a transcoded_file to a variant' do
     AttachSourceFile.perform(video)
     described_class.perform(video)
 
