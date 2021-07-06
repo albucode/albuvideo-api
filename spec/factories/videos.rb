@@ -5,7 +5,7 @@ FactoryBot.define do
     title { Faker::Movie.title }
     published { true }
     status { 'ready' }
-    source { Faker::Internet.url }
+    source { 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4' }
     user
   end
 end

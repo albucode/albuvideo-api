@@ -12,7 +12,8 @@ RSpec.describe VideosController, type: :controller do
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { video: { title: 'VideoTitle', published: false, source: 'testsource' } },
+        source = 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4'
+        post :create, params: { video: { title: 'VideoTitle', published: false, source: source } },
                       as: :json
       end
 
@@ -30,6 +31,14 @@ RSpec.describe VideosController, type: :controller do
       it "video user_id matches current_user's id" do
         valid_request
         expect(Video.last.user_id).to match(user.id)
+      end
+
+      it 'enqueues a AttachSourceFileJob' do
+        ActiveJob::Base.queue_adapter = :test
+
+        valid_request
+
+        expect(AttachSourceFileJob).to have_been_enqueued.exactly(:once)
       end
     end
 
