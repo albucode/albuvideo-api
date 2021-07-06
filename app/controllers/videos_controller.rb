@@ -8,7 +8,7 @@ class VideosController < ApplicationController
     video = Video.new video_params
     video.user_id = current_user.id
     if video.save
-      AttachSourceFile.perform(video)
+      AttachSourceFileJob.perform_later(video.id)
       render json: video, status: :created
     else
       render(
