@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'm3u8'
+
 class SplitVariantIntoSegments
   class << self
     def perform(variant)
