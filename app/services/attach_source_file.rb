@@ -10,6 +10,8 @@ class AttachSourceFile
     video.source_file.attach(io: tempfile, filename: "#{video.public_id}#{extension}")
     File.delete(path)
 
-    TranscodeSourceFileJob.perform_later(video.id)
+    TranscodeSourceFileJob.perform_later(video.id, 1920, 1080)
+    TranscodeSourceFileJob.perform_later(video.id, 1280, 720)
+    TranscodeSourceFileJob.perform_later(video.id, 853, 480)
   end
 end

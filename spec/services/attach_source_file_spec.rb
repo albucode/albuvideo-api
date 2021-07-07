@@ -16,6 +16,6 @@ RSpec.describe AttachSourceFile do
 
     described_class.perform(video)
 
-    expect(TranscodeSourceFileJob).to have_been_enqueued.exactly(:once)
+    expect(TranscodeSourceFileJob).to have_been_enqueued.exactly(3)
   end
 end
