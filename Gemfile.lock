@@ -109,6 +109,7 @@ GEM
     loofah (2.9.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
+    m3u8 (0.8.2)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
@@ -261,6 +262,7 @@ DEPENDENCIES
   faker
   foreman
   listen (~> 3.3)
+  m3u8
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors

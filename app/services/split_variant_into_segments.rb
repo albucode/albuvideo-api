@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'm3u8'
+
 class SplitVariantIntoSegments
   def self.perform(variant)
     variant.transcoded_file.open do |file|
@@ -12,11 +14,13 @@ class SplitVariantIntoSegments
         exception: true
       )
 
-      # segment_file = File.open(segment_path)
-      #
-      # segment = Segment.create!(variant_id: variant.id, position: position, duration: duration)
-      #
-      # segment.segment_file.attach(io: segment_file, filename: "#{variant.public_id}_segment_#{segment_order_on_playlist}.ts")
+      playlist_file = File.open(playlist_path)
+      playlist = M3u8::Playlist.read(playlist_file)
+
+      playlist.items.each_with_index do |item, index|
+        segment = Segment.create!(variant_id: variant.id, position: index, duration: item.duration)
+        segment.segment_file.attach(io: File.open("/tmp/#{item.segment}"), filename: item.segment)
+      end
     end
   end
 end
