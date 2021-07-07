@@ -7,7 +7,7 @@ RSpec.describe TranscodeSourceFile do
 
   it 'attaches a transcoded_file to a variant' do
     AttachSourceFile.perform(video)
-    described_class.perform(video)
+    described_class.perform(video, 1920, 1080)
 
     expect(video.variants.last.transcoded_file).to be_present
   end
