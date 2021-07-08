@@ -9,7 +9,7 @@ RSpec.describe Segment, type: :model do
     expect(segment.validate!).to eq(true)
   end
 
-  it { is_expected.to validate_numericality_of(:position).is_greater_than(0) }
+  it { is_expected.to validate_numericality_of(:position).is_greater_than_or_equal_to(0) }
 
   it { is_expected.to validate_numericality_of(:duration).is_greater_than(0) }
 
