@@ -40,6 +40,7 @@ class SplitVariantIntoSegments
         segment.segment_file.attach(io: File.open("/tmp/#{item.segment}"), filename: item.segment)
         File.delete("/tmp/#{item.segment}")
       end
+      video.process!
     end
   end
 end
