@@ -19,6 +19,7 @@ class TranscodeSourceFile
       File.delete(transcoded_file.path)
 
       SplitVariantIntoSegmentsJob.perform_later(variant.id)
+      video.process!
     end
   end
 end

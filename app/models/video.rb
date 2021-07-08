@@ -1,7 +1,17 @@
 # frozen_string_literal: true
 
 class Video < ApplicationRecord
+  include AASM
   include PublicId
+
+  aasm column: 'status' do
+    state :processing, initial: true
+    state :ready
+
+    event :process do
+      transitions from: :processing, to: :ready
+    end
+  end
 
   belongs_to :user
   has_many :variants, dependent: :destroy
