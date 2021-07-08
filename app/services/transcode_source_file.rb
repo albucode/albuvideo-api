@@ -18,7 +18,7 @@ class TranscodeSourceFile
       variant.transcoded_file.attach(io: transcoded_file, filename: "#{variant.public_id}.mp4")
       File.delete(transcoded_file.path)
 
-      SplitVariantIntoSegmentsJob.perform_later(variant.id, video)
+      SplitVariantIntoSegmentsJob.perform_later(variant.id)
     end
   end
 end

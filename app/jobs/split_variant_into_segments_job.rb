@@ -3,8 +3,8 @@
 class SplitVariantIntoSegmentsJob < ApplicationJob
   queue_as :default
 
-  def perform(variant_id, video)
+  def perform(variant_id)
     variant = Variant.find(variant_id)
-    SplitVariantIntoSegments.perform(variant, video)
+    SplitVariantIntoSegments.perform(variant)
   end
 end
