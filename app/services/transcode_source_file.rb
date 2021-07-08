@@ -18,7 +18,6 @@ class TranscodeSourceFile
       variant.transcoded_file.attach(io: transcoded_file, filename: "#{variant.public_id}.mp4")
       File.delete(transcoded_file.path)
 
-      # aqui chamamos o Job que vai quebrar em segmentos
       SplitVariantIntoSegmentsJob.perform_later(variant.id)
     end
   end
