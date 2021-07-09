@@ -11,6 +11,6 @@ RSpec.describe SplitVariantIntoSegments do
 
     described_class.perform(video.variants.last)
 
-    expect(video.variants.last.segments.last.segment_file).to be_present
+    expect(Segment.last.segment_file).to be_present
   end
 end
