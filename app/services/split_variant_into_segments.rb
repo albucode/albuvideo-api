@@ -12,6 +12,7 @@ class SplitVariantIntoSegments
       playlist = M3u8::Playlist.read(playlist_file)
 
       create_segments(playlist, variant)
+      File.delete(playlist_path)
     end
 
     private
@@ -23,10 +24,11 @@ class SplitVariantIntoSegments
         input_path = file.path
         system(
           "ffmpeg -i #{input_path} -y -loglevel error -c:v copy -c:a copy -vbsf h264_mp4toannexb -hls_time 6 -hls_list_size 0"\
-          "-hls_segment_filename #{segment_path} #{playlist_path}",
+          "-hls_segment_filename '#{segment_path}' #{playlist_path}",
           exception: true
         )
       end
+       File.delete(segment_path)
     end
 
     def create_segments(playlist, variant)
@@ -34,6 +36,7 @@ class SplitVariantIntoSegments
         segment = Segment.create!(variant_id: variant.id, position: index, duration: item.duration)
 
         segment.segment_file.attach(io: File.open("/tmp/#{item.segment}"), filename: item.segment)
+        File.delete("/tmp/#{item.segment}")
       end
     end
   end
