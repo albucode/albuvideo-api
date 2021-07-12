@@ -12,6 +12,6 @@ class AttachSourceFile
 
     TranscodeSourceFileJob.perform_later(video.id, 1920, 1080)
     TranscodeSourceFileJob.perform_later(video.id, 1280, 720)
-    TranscodeSourceFileJob.perform_later(video.id, 853, 480)
+    TranscodeSourceFileJob.perform_later(video.id, 852, 480)
   end
 end
