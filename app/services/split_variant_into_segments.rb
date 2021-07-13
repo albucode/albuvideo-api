@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require 'm3u8'
+
 class SplitVariantIntoSegments
   class << self
     def perform(variant)
+      video = variant.video
+
       playlist_path = "/tmp/#{variant.public_id}_playlist.m3u8"
 
       split_transcoded_file(variant, playlist_path)
@@ -12,7 +16,10 @@ class SplitVariantIntoSegments
       playlist = M3u8::Playlist.read(playlist_file)
 
       create_segments(playlist, variant)
+
       File.delete(playlist_path)
+
+      video.process! if video.may_process?
     end
 
     private
