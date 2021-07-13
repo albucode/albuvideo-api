@@ -35,7 +35,7 @@ class SplitVariantIntoSegments
           exception: true
         )
       end
-       File.delete(segment_path)
+      File.delete(segment_path)
     end
 
     def create_segments(playlist, variant)
