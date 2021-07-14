@@ -16,7 +16,7 @@ RSpec.describe WebhooksController, type: :controller do
                       as: :json
       end
 
-      it 'returns a 200' do
+      it 'returns a 201' do
         valid_request
         expect(response).to have_http_status(:created)
       end
@@ -29,7 +29,7 @@ RSpec.describe WebhooksController, type: :controller do
 
       it "webhook user_id matches current_user's id" do
         valid_request
-        expect(Webhook.last.user_id).to match(user.id)
+        expect(Webhook.last.user_id).to eq(user.id)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe WebhooksController, type: :controller do
         response = invalid_request
         body = JSON.parse(response.body)
         expect(body).to match({ 'errors' => ['Topic can\'t be blank',  'Url can\'t be blank',
-                                             'Url is not a valid URL', 'Topic must be accepted'] })
+                                             'Url is not a valid URL', 'Topic is not included in the list'] })
       end
     end
   end
@@ -65,13 +65,13 @@ RSpec.describe WebhooksController, type: :controller do
         sign_in(user)
       end
 
-      it 'raises ActiveRecord::Record Not Found exception' do
+      it 'raises ActiveRecord::RecordNotFound exception' do
         expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end
 
-  describe 'access token update' do
+  describe 'webhook update' do
     before do
       sign_in(user)
     end
@@ -80,8 +80,8 @@ RSpec.describe WebhooksController, type: :controller do
       subject(:webhook) { FactoryBot.create(:webhook, user_id: user.id) }
 
       let(:valid_request) do
-        post :update, params: { id: webhook.public_id, webhook: { topic: 'video/ready', url: 'https://www.tests-update.com' } },
-                      as: :json
+        post :update, params: { id: webhook.public_id, webhook:
+          { topic: 'video/ready', url: 'https://www.tests-update.com' } }, as: :json
       end
 
       it 'returns a 200' do
@@ -111,7 +111,7 @@ RSpec.describe WebhooksController, type: :controller do
       it 'matches an error message' do
         response = invalid_request
         body = JSON.parse(response.body)
-        expect(body).to match({ 'errors' => ['Topic can\'t be blank', 'Topic must be accepted'] })
+        expect(body).to match({ 'errors' => ['Topic can\'t be blank', 'Topic is not included in the list'] })
       end
     end
   end

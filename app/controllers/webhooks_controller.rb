@@ -28,7 +28,7 @@ class WebhooksController < ApplicationController
 
   def update
     if @webhook.update webhook_params
-      render json: @webhook, status: :ok
+      render json: @webhook
     else
       render(
         json: { errors: @webhook.errors.full_messages },

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'validate_url/rspec_matcher'
 
 RSpec.describe Webhook, type: :model do
   subject(:webhook) { FactoryBot.build(:webhook) }
@@ -14,5 +13,5 @@ RSpec.describe Webhook, type: :model do
 
   it { is_expected.to validate_presence_of(:topic) }
 
-  it { is_expected.to validate_acceptance_of(:topic) }
+  it { is_expected.to validate_inclusion_of(:topic).in_array(%w[video/ready video/failed]) }
 end

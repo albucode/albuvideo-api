@@ -125,9 +125,10 @@ ActiveRecord::Schema.define(version: 2021_07_13_180805) do
     t.string "topic", null: false
     t.string "url", null: false
     t.bigint "user_id", null: false
-    t.string "public_id"
+    t.string "public_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["public_id"], name: "index_webhooks_on_public_id", unique: true
     t.index ["user_id"], name: "index_webhooks_on_user_id"
   end
 
