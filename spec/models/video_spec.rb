@@ -11,6 +11,8 @@ RSpec.describe Video, type: :model do
 
   it { is_expected.to validate_presence_of(:source) }
 
+  it { is_expected.to validate_url_of(:source) }
+
   it { is_expected.to validate_presence_of(:status) }
 
   it { is_expected.to validate_presence_of(:public_id) }
