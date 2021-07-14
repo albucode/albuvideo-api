@@ -17,6 +17,7 @@ gem 'rack-cors'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'rails_same_site_cookie'
 gem 'redis', '~> 4.0'
+gem 'rest-client'
 gem 'sidekiq'
 gem 'validate_url'
 

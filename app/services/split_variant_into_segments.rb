@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'm3u8'
+require 'rest-client'
 
 class SplitVariantIntoSegments
   class << self
@@ -20,6 +21,21 @@ class SplitVariantIntoSegments
       File.delete(playlist_path)
 
       video.process! if video.may_process?
+
+      webhook = WebhookSubscription.find_by(user: video.user, topic: 'video/ready')
+
+      if webhook
+        RestClient.post webhook.url.to_s, {
+          video: {
+            id: video.public_id.to_s,
+            title: video.title.to_s,
+            status: video.status.to_s,
+            published: video.published.to_s,
+            source: video.source.to_s,
+            created_at: video.created_at.to_s
+          }
+        }
+      end
     end
 
     private
