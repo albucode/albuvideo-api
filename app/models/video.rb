@@ -21,6 +21,7 @@ class Video < ApplicationRecord
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing
 
   validates :source, :status, presence: true
+  validates :source, url: true
 
   validates :published, inclusion: { in: [true, false] }
 end

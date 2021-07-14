@@ -18,6 +18,7 @@ gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'rails_same_site_cookie'
 gem 'redis', '~> 4.0'
 gem 'sidekiq'
+gem 'validate_url'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

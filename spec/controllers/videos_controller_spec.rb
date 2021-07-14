@@ -55,7 +55,8 @@ RSpec.describe VideosController, type: :controller do
       it 'matches an error message' do
         response = invalid_request
         body = JSON.parse(response.body)
-        expect(body).to match({ 'errors' => ['Source can\'t be blank', 'Published is not included in the list'] })
+        expect(body).to match({ 'errors' => ['Source can\'t be blank', 'Source is not a valid URL',
+                                             'Published is not included in the list'] })
       end
     end
   end

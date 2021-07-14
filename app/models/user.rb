@@ -9,4 +9,5 @@ class User < ApplicationRecord
   has_many :video_watch_events, dependent: :destroy
   has_many :access_tokens, dependent: :destroy
   has_many :signature_keys, dependent: :destroy
+  has_many :webhooks, dependent: :destroy
 end
