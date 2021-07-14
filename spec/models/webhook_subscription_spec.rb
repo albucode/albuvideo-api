@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Webhook, type: :model do
-  subject(:webhook) { FactoryBot.build(:webhook) }
+RSpec.describe WebhookSubscription, type: :model do
+  subject(:webhook_subscription) { FactoryBot.build(:webhook_subscription) }
 
   it ' has a valid factory' do
-    expect(webhook.validate!).to eq(true)
+    expect(webhook_subscription.validate!).to eq(true)
   end
 
   it { is_expected.to validate_url_of(:url) }

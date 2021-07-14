@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Webhook < ApplicationRecord
+class WebhookSubscription < ApplicationRecord
   include PublicId
 
   belongs_to :user
