@@ -8,8 +8,6 @@ class SplitVariantIntoSegments
     def perform(variant)
       video = variant.video
 
-      webhook_subscription = WebhookSubscription.find_by(user: video.user, topic: 'video/ready')
-
       playlist_path = "/tmp/#{variant.public_id}_playlist.m3u8"
 
       split_transcoded_file(variant, playlist_path)
@@ -22,10 +20,7 @@ class SplitVariantIntoSegments
 
       File.delete(playlist_path)
 
-      if video.may_process?
-        video.process!
-        SendVideoStatusWebhookJob.perform_later(webhook_subscription.id, video.id) if webhook_subscription
-      end
+      video.process! video if video.may_process?
     end
 
     private
