@@ -7,6 +7,7 @@ class SplitVariantIntoSegments
   class << self
     def perform(variant)
       video = variant.video
+      webhook_subscription = WebhookSubscription.find_by(user: video.user, topic: 'video/ready')
 
       playlist_path = "/tmp/#{variant.public_id}_playlist.m3u8"
 
@@ -22,14 +23,7 @@ class SplitVariantIntoSegments
 
       video.process! if video.may_process?
 
-      webhook = WebhookSubscription.find_by(user: video.user, topic: 'video/ready')
-
-      if webhook
-        RestClient.post webhook.url.to_s,
-                        { video: ActiveModelSerializers::SerializableResource.new(video) }.to_json,
-                        content_type: :json,
-                        accept: :json
-      end
+      send_webhook(webhook_subscription, video)
     end
 
     private
@@ -54,6 +48,15 @@ class SplitVariantIntoSegments
 
         segment.segment_file.attach(io: File.open("/tmp/#{item.segment}"), filename: item.segment)
         File.delete("/tmp/#{item.segment}")
+      end
+    end
+
+    def send_webhook(webhook_subscription, video)
+      if webhook_subscription
+        RestClient.post webhook_subscription.url.to_s,
+                        { video: ActiveModelSerializers::SerializableResource.new(video) }.to_json,
+                        content_type: :json,
+                        accept: :json
       end
     end
   end
