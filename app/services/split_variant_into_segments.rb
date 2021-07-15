@@ -24,7 +24,7 @@ class SplitVariantIntoSegments
 
       if video.may_process?
         video.process!
-        SendVideoStatusWebhookJob.perform_later(webhook_subscription, video)
+        SendVideoStatusWebhookJob.perform_later(webhook_subscription.id, video.id)
       end
     end
 
