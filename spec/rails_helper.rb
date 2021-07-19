@@ -11,6 +11,7 @@ require 'support/factory_bot'
 require 'shoulda/matchers'
 require 'devise'
 require 'validate_url/rspec_matcher'
+require 'webmock/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

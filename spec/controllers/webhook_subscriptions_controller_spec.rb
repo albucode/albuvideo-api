@@ -2,17 +2,17 @@
 
 require 'rails_helper'
 
-RSpec.describe WebhooksController, type: :controller do
+RSpec.describe WebhookSubscriptionsController, type: :controller do
   subject(:user) { FactoryBot.create(:user) }
 
-  describe 'webhook creation' do
+  describe 'webhook_subscription creation' do
     before do
       sign_in(user)
     end
 
     context 'with valid params' do
       let(:valid_request) do
-        post :create, params: { webhook: { topic: 'video/ready', url: 'https://www.tests.com' } },
+        post :create, params: { webhook_subscription: { topic: 'video/ready', url: 'https://www.tests.com' } },
                       as: :json
       end
 
@@ -21,21 +21,21 @@ RSpec.describe WebhooksController, type: :controller do
         expect(response).to have_http_status(:created)
       end
 
-      it 'creates a new webhook' do
+      it 'creates a new webhook_subscription' do
         expect do
           valid_request
-        end.to change(Webhook, :count).by(1)
+        end.to change(WebhookSubscription, :count).by(1)
       end
 
-      it "webhook user_id matches current_user's id" do
+      it "webhook_subscription user_id matches current_user's id" do
         valid_request
-        expect(Webhook.last.user_id).to eq(user.id)
+        expect(WebhookSubscription.last.user_id).to eq(user.id)
       end
     end
 
     context 'with invalid params' do
       let(:invalid_request) do
-        post :create, params: { webhook: { topic: '', url: '' } }, as: :json
+        post :create, params: { webhook_subscription: { topic: '', url: '' } }, as: :json
       end
 
       it 'returns a 422' do
@@ -52,13 +52,13 @@ RSpec.describe WebhooksController, type: :controller do
     end
   end
 
-  describe 'webhook deletion' do
-    context 'when webhook belongs to another user' do
-      subject(:webhook) { FactoryBot.create(:webhook, user_id: user2.id) }
+  describe 'webhook_subscription deletion' do
+    context 'when webhook_subscription belongs to another user' do
+      subject(:webhook_subscription) { FactoryBot.create(:webhook_subscription, user_id: user2.id) }
 
       let(:user2) { FactoryBot.create(:user) }
       let(:invalid_request) do
-        delete :destroy, params: { id: webhook.public_id }
+        delete :destroy, params: { id: webhook_subscription.public_id }
       end
 
       before do
@@ -71,16 +71,16 @@ RSpec.describe WebhooksController, type: :controller do
     end
   end
 
-  describe 'webhook update' do
+  describe 'webhook_subscription update' do
     before do
       sign_in(user)
     end
 
     context 'with valid params' do
-      subject(:webhook) { FactoryBot.create(:webhook, user_id: user.id) }
+      subject(:webhook_subscription) { FactoryBot.create(:webhook_subscription, user_id: user.id) }
 
       let(:valid_request) do
-        post :update, params: { id: webhook.public_id, webhook:
+        post :update, params: { id: webhook_subscription.public_id, webhook_subscription:
           { topic: 'video/ready', url: 'https://www.tests-update.com' } }, as: :json
       end
 
@@ -91,15 +91,15 @@ RSpec.describe WebhooksController, type: :controller do
 
       it 'changes the url' do
         valid_request
-        expect(webhook.reload.url).to eq('https://www.tests-update.com')
+        expect(webhook_subscription.reload.url).to eq('https://www.tests-update.com')
       end
     end
 
     context 'with invalid params' do
-      subject(:webhook) { FactoryBot.create(:webhook, user_id: user.id) }
+      subject(:webhook_subscription) { FactoryBot.create(:webhook_subscription, user_id: user.id) }
 
       let(:invalid_request) do
-        put :update, params: { id: webhook.public_id, webhook: { topic: '' } },
+        put :update, params: { id: webhook_subscription.public_id, webhook_subscription: { topic: '' } },
                      as: :json
       end
 

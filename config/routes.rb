@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :videos, only: %i[index show destroy create]
   resources :access_tokens
   resources :signature_keys
-  resources :webhooks
+  resources :webhook_subscriptions
   resource :stats, only: :show
 
   if Rails.env.development?

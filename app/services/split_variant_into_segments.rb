@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'm3u8'
+require 'rest-client'
 
 class SplitVariantIntoSegments
   class << self
@@ -19,7 +20,7 @@ class SplitVariantIntoSegments
 
       File.delete(playlist_path)
 
-      video.process! if video.may_process?
+      video.process! video if video.may_process?
     end
 
     private

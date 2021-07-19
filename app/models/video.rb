@@ -9,6 +9,10 @@ class Video < ApplicationRecord
     state :ready
 
     event :process do
+      after do
+        webhook_subscription = WebhookSubscription.find_by(user_id: user_id, topic: 'video/ready')
+        SendVideoStatusWebhookJob.perform_later(webhook_subscription.id, id) if webhook_subscription
+      end
       transitions from: :processing, to: :ready
     end
   end

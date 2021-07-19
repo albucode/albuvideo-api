@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateWebhooks < ActiveRecord::Migration[6.1]
+class CreateWebhookSubscriptions < ActiveRecord::Migration[6.1]
   def change
-    create_table :webhooks do |t|
+    create_table :webhook_subscriptions do |t|
       t.string :topic, null: false
       t.string :url, null: false
       t.references :user, null: false, foreign_key: true
