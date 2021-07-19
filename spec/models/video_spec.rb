@@ -27,4 +27,28 @@ RSpec.describe Video, type: :model do
 
     expect(video.public_id).to eq(loaded_video.public_id)
   end
+
+  describe '#process!' do
+    let(:video) { FactoryBot.create(:video, status: :processing) }
+
+    before do
+      ActiveJob::Base.queue_adapter = :test
+    end
+
+    it 'enqueues a SendVideoStatusWebhookJob job when webhook_subscription has topic video/ready' do
+      FactoryBot.create(:webhook_subscription, user_id: video.user_id)
+
+      video.process!
+
+      expect(SendVideoStatusWebhookJob).to have_been_enqueued.exactly(:once)
+    end
+
+    it 'does not enqueue a SendVideoStatusWebhookJob job when webhook_subscription has topic video/fail' do
+      FactoryBot.create(:webhook_subscription, user_id: video.user_id, topic: 'video/failed')
+
+      video.process!
+
+      expect(SendVideoStatusWebhookJob).to have_been_enqueued.exactly(0)
+    end
+  end
 end
