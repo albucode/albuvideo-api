@@ -13,8 +13,6 @@ require 'devise'
 require 'validate_url/rspec_matcher'
 require 'webmock/rspec'
 
-WebMock.allow_net_connect!
-
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
