@@ -80,6 +80,8 @@ GEM
       activesupport
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
+    crack (0.4.5)
+      rexml
     crass (1.0.6)
     devise (4.7.3)
       bcrypt (~> 3.0)
@@ -104,6 +106,7 @@ GEM
     foreman (0.87.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashdiff (1.0.1)
     http-accept (1.7.0)
     http-cookie (1.0.4)
       domain_name (~> 0.5)
@@ -264,6 +267,10 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webmock (3.13.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -304,6 +311,7 @@ DEPENDENCIES
   spring
   validate_url
   web-console (>= 4.1.0)
+  webmock
 
 BUNDLED WITH
    2.2.15

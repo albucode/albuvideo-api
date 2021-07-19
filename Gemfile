@@ -34,6 +34,7 @@ end
 group :test do
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
+  gem "webmock"
 end
 
 group :development do
