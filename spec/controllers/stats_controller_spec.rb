@@ -7,10 +7,12 @@ RSpec.describe StatsController, type: :controller do
 
   let(:video) { FactoryBot.create(:video) }
 
-  let(:video_watch_event) { FactoryBot.create(:video_watch_event, video_id: video.id, user_id: user.id) }
-  let(:video_watch_event2) { FactoryBot.create(:video_watch_event, video_id: video.id, user_id: user.id, duration: 2) }
+  let(:video_stream_event) { FactoryBot.create(:video_stream_event, video_id: video.id, user_id: user.id) }
+  let(:video_stream_event2) do
+    FactoryBot.create(:video_stream_event, video_id: video.id, user_id: user.id, duration: 2)
+  end
 
-  describe 'get total watch time' do
+  describe 'get total stream time' do
     before do
       sign_in(user)
     end
@@ -19,16 +21,16 @@ RSpec.describe StatsController, type: :controller do
       get :show, as: :json
     end
 
-    it 'returns a the sum of all duration for user\'s video watch time' do
-      video_watch_event
-      video_watch_event2
+    it 'returns a the sum of all duration for user\'s video stream time' do
+      video_stream_event
+      video_stream_event2
       body = JSON.parse(request.body)
-      expect(body).to match({ 'stats' => { 'time_watched' => 4 } })
+      expect(body).to match({ 'stats' => { 'time_streamed' => 4 } })
     end
 
-    it 'returns 0 when user has not created any video_watch_events' do
+    it 'returns 0 when user has not created any video_stream_events' do
       body = JSON.parse(request.body)
-      expect(body).to match({ 'stats' => { 'time_watched' => 0 } })
+      expect(body).to match({ 'stats' => { 'time_streamed' => 0 } })
     end
   end
 end

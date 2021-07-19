@@ -4,8 +4,8 @@ class StatsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    total_watch_time = VideoWatchEvent.where(user: current_user).sum(:duration).round
+    total_stream_time = VideoStreamEvent.where(user: current_user).sum(:duration).round
 
-    render json: { stats: { time_watched: total_watch_time } }
+    render json: { stats: { time_streamed: total_stream_time } }
   end
 end
