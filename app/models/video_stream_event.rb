@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VideoWatchEvent < ApplicationRecord
+class VideoStreamEvent < ApplicationRecord
   belongs_to :video
   belongs_to :user
 

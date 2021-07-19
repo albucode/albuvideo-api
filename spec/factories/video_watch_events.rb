@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :video_watch_event do
+  factory :video_stream_event do
     video
     user
     duration { 1.5 }
