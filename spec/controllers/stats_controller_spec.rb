@@ -25,12 +25,12 @@ RSpec.describe StatsController, type: :controller do
       video_stream_event
       video_stream_event2
       body = JSON.parse(request.body)
-      expect(body).to match({ 'stats' => { 'time_streamed' => 4 } })
+      expect(body['stats']['time_streamed']).to eq(4)
     end
 
     it 'returns 0 when user has not created any video_stream_events' do
       body = JSON.parse(request.body)
-      expect(body).to match({ 'stats' => { 'time_streamed' => 0 } })
+      expect(body['stats']['time_streamed']).to eq(0)
     end
   end
 end
