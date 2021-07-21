@@ -22,3 +22,6 @@ Rails/NotNullColumn:
 Metrics/BlockLength:
   Exclude:
     - spec/*/**
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
