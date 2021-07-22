@@ -9,8 +9,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user = User.create!({ email: 'a@a.com', password: 'asdasdasd' })
-video = Video.create!({ title: 'Video1', published: true, source: 'sourceseed', user_id: user.id })
+video = Video.create!({ title: 'Video1', published: true, source: 'http://www.sourceseed.com', user_id: user.id })
 
 3.times do
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id })
+end
+
+3.times do
+  VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id, created_at: 10.minutes.ago })
 end
