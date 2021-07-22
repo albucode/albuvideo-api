@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ReturnVideoStats
+class UserStats
   class << self
     def perform(user)
       { stats: { time_streamed: total_stream_time(user), time_stored: total_time_stored(user),
