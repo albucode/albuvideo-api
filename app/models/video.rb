@@ -28,4 +28,12 @@ class Video < ApplicationRecord
   validates :source, url: true
 
   validates :published, inclusion: { in: [true, false] }
+
+  def total_stream_time
+    VideoStreamEvent.where(video: id).sum(:duration).round
+  end
+
+  def stream_time_last_24h
+    VideoStreamEvent.where(video: id, created_at: 24.hours.ago..Time.zone.now).sum(:duration).round
+  end
 end
