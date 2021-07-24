@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Video, type: :model do
-  subject(:video) { FactoryBot.build(:video) }
+  subject(:video) { FactoryBot.create(:video) }
+
+  let(:video_stream_event) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 2.days.ago) }
+  let(:video_stream_event2) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 10.minutes.ago) }
 
   it ' has a valid factory' do
     expect(video.validate!).to eq(true)
@@ -49,6 +52,32 @@ RSpec.describe Video, type: :model do
       video.process!
 
       expect(SendVideoStatusWebhookJob).to have_been_enqueued.exactly(0)
+    end
+  end
+
+  describe 'get total stream time' do
+    it "returns a the sum of all duration for a video's stream time" do
+      video_stream_event
+      video_stream_event2
+
+      expect(video.total_stream_time).to equal(3)
+    end
+
+    it 'returns 0 when video has never been streamed' do
+      expect(video.total_stream_time).to equal(0)
+    end
+  end
+
+  describe 'get total stream time for last 24h' do
+    it "returns a the sum of all duration for a video's stream time for last 24h'" do
+      video_stream_event
+      video_stream_event2
+
+      expect(video.stream_time_last_24h).to equal(2)
+    end
+
+    it 'returns 0 when video has never been streamed' do
+      expect(video.stream_time_last_24h).to equal(0)
     end
   end
 end
