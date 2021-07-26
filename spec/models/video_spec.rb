@@ -56,7 +56,7 @@ RSpec.describe Video, type: :model do
   end
 
   describe 'get total stream time' do
-    it 'returns a the sum of all duration for a video\'s stream time' do
+    it "returns a the sum of all duration for a video's stream time" do
       video_stream_event
       video_stream_event2
 
@@ -69,7 +69,8 @@ RSpec.describe Video, type: :model do
   end
 
   describe 'get total stream time for last 24h' do
-    it 'returns a the sum of all duration for a video\'s stream time for last 24h' do
+    it "returns a the sum of all duration for a video's stream time for last 24h'" do
+
       video_stream_event
       video_stream_event2
 
