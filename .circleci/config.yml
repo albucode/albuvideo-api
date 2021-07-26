@@ -24,6 +24,8 @@ jobs:
           POSTGRES_USER: circleci-demo-ruby
           POSTGRES_DB: albuvideo_api_test
           POSTGRES_PASSWORD: ""
+      - image: circleci/redis:alpine
+
     # environment variables specific to Ruby/Rails, applied to the primary container.
     environment:
       BUNDLE_JOBS: "3"
@@ -38,6 +40,9 @@ jobs:
       - ruby/install-deps
       # Here we make sure that the secondary container boots
       # up before we run operations on the database.
+      - run:
+          name: Install FFmpeg
+          command: sudo apt update && sudo apt install -y ffmpeg
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
