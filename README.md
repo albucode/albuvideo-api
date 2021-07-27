@@ -1,24 +1,22 @@
-# README
+# albuvideo-api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+#$# TimescaleDB - PostgreSQL extension for time-series
 
-* Ruby version
+Install TimescaleDB
+```shell
+brew tap guialbuk/homebrew-tap
+brew install timescaledb
+```
 
-* System dependencies
+Generate configuration
+```shell
+timescaledb-tune --quiet --yes
+timescaledb_move.sh
+````
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Restart PostgreSQL server
+```shell
+brew services restart postgresql
+```
