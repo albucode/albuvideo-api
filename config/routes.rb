@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :signature_keys
   resources :webhook_subscriptions
   resource :stats, only: :show
-  resource :video_stats, only: :show
+  resources :video_stats, only: :show
 
   if Rails.env.development?
     require 'sidekiq/web'
