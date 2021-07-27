@@ -24,5 +24,8 @@ Metrics/BlockLength:
   Exclude:
     - spec/*/**
 
+Metrics/MethodLength:
+  CountAsOne: ['array', 'heredoc', 'hash']
+
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
