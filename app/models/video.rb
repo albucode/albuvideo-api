@@ -38,12 +38,13 @@ class Video < ApplicationRecord
   end
 
   def hourly_stream_time_last_24h
-    <<~SQL.squish
+    query = <<~SQL.squish
       SELECT sum(duration), time_bucket_gapfill('1 hour', video_stream_events.created_at) AS period
       FROM video_stream_events
       LEFT JOIN videos v on video_stream_events.video_id = v.id
       WHERE(public_id = '#{public_id}' AND video_stream_events.created_at BETWEEN NOW() - interval '48 hours' AND NOW())
       GROUP BY period;
     SQL
+    ActiveRecord::Base.connection.execute(query).to_a
   end
 end

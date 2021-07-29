@@ -5,7 +5,6 @@ class VideoStatsController < ApplicationController
 
   def show
     video = Video.find_by(public_id: params[:video_id], user: current_user)
-    query = video.hourly_stream_time_last_24h
-    render json: ActiveRecord::Base.connection.execute(query).to_a
+    render json: video.hourly_stream_time_last_24h
   end
 end
