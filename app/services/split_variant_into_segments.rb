@@ -31,12 +31,11 @@ class SplitVariantIntoSegments
       variant.transcoded_file.open do |file|
         input_path = file.path
         system(
-          "ffmpeg -i #{input_path} -y -loglevel error -c:v copy -c:a copy -vbsf h264_mp4toannexb -hls_time 6 -hls_list_size 0"\
-          "-hls_segment_filename '#{segment_path}' #{playlist_path}",
+          "ffmpeg -i #{input_path} -y -loglevel error -c:v copy -c:a copy -vbsf h264_mp4toannexb -hls_time 6"\
+          " -hls_list_size 0 -hls_segment_filename '#{segment_path}' #{playlist_path}",
           exception: true
         )
       end
-      File.delete(segment_path)
     end
 
     def create_segments(playlist, variant)

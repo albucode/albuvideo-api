@@ -8,6 +8,7 @@ AllCops:
   Exclude:
     - bin/*
     - db/schema.rb
+    -  vendor/**/*
 
 Style/Documentation:
   Enabled: false
@@ -22,6 +23,9 @@ Rails/NotNullColumn:
 Metrics/BlockLength:
   Exclude:
     - spec/*/**
+
+Metrics/MethodLength:
+  CountAsOne: ['array', 'heredoc', 'hash']
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
