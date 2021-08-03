@@ -4,11 +4,13 @@ Rails.application.routes.draw do
   devise_for :users
 
   resource :current_user, only: :show, controller: :current_user
-  resources :videos, only: %i[index show destroy create]
+  resources :videos, only: %i[index show destroy create] do
+    resource :stats, only: :show, controller: :video_stats
+  end
   resources :access_tokens
   resources :signature_keys
   resources :webhook_subscriptions
-  resource :stats, only: :show
+  resource  :stats, only: :show
 
   if Rails.env.development?
     require 'sidekiq/web'

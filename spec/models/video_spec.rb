@@ -7,6 +7,7 @@ RSpec.describe Video, type: :model do
 
   let(:video_stream_event) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 2.days.ago) }
   let(:video_stream_event2) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 10.minutes.ago) }
+  let(:video_stream_event3) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 10.minutes.ago) }
 
   it ' has a valid factory' do
     expect(video.validate!).to eq(true)
@@ -78,6 +79,16 @@ RSpec.describe Video, type: :model do
 
     it 'returns 0 when video has never been streamed' do
       expect(video.stream_time_last_24h).to equal(0)
+    end
+  end
+
+  describe 'gets sums of hourly_stream_time_last_24h' do
+    it "returns the hourly sum of durations for a video's stream time for the last 24h" do
+      video_stream_event2
+      video_stream_event3
+      my_array = video.hourly_stream_time_last_24h
+
+      expect(my_array.find { |item| item[:sum] = 3.0 }).not_to be_nil
     end
   end
 end
