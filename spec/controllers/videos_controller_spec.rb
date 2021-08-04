@@ -76,7 +76,7 @@ RSpec.describe VideosController, type: :controller do
       it 'returns a hash with the right value for playlist_link' do
         response = valid_request
         body = JSON.parse(response.body)
-        expect(body['video']['playlist_link']).to eq("http://localhost:8000/videos/#{video.public_id}.m3u8")
+        expect(body['video']['playlist_url']).to eq("http://localhost:8000/videos/#{video.public_id}.m3u8")
       end
     end
   end
