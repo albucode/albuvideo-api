@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe VideosController, type: :controller do
   subject(:user) { FactoryBot.create(:user) }
 
+  let(:video) { FactoryBot.create(:video, user_id: user.id) }
+
   describe 'video creation' do
     before do
       sign_in(user)
@@ -57,6 +59,24 @@ RSpec.describe VideosController, type: :controller do
         body = JSON.parse(response.body)
         expect(body).to match({ 'errors' => ['Source can\'t be blank', 'Source is not a valid URL',
                                              'Published is not included in the list'] })
+      end
+    end
+  end
+
+  describe 'video show' do
+    context 'with valid user' do
+      before do
+        sign_in(user)
+      end
+
+      let(:valid_request) do
+        get :show, params: { id: video.public_id }, as: :json
+      end
+
+      it 'returns a hash with the right value for playlist_link' do
+        response = valid_request
+        body = JSON.parse(response.body)
+        expect(body['video']['playlist_link']).to eq("http://localhost:8000/videos/#{video.public_id}.m3u8")
       end
     end
   end
