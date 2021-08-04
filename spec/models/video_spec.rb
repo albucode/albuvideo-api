@@ -5,9 +5,11 @@ require 'rails_helper'
 RSpec.describe Video, type: :model do
   subject(:video) { FactoryBot.create(:video) }
 
+  let(:video2) { FactoryBot.create(:video) }
   let(:video_stream_event) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 2.days.ago) }
   let(:video_stream_event2) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 10.minutes.ago) }
   let(:video_stream_event3) { FactoryBot.create(:video_stream_event, video_id: video.id, created_at: 10.minutes.ago) }
+  let(:video_stream_event4) { FactoryBot.create(:video_stream_event, video_id: video2.id, created_at: 10.minutes.ago) }
 
   it ' has a valid factory' do
     expect(video.validate!).to eq(true)
@@ -89,6 +91,21 @@ RSpec.describe Video, type: :model do
       my_array = video.hourly_stream_time_last_24h
 
       expect(my_array.find { |item| item[:sum] = 3.0 }).not_to be_nil
+    end
+  end
+
+  describe 'gets the number of time a video has been watched' do
+    it 'returns the number of unique session_ids for a video' do
+      video_stream_event
+      video_stream_event
+      video_stream_event2
+      video_stream_event4
+
+      expect(video.times_watched).to equal(2)
+    end
+
+    it 'returns 0 when video has never been watched' do
+      expect(video.times_watched).to equal(0)
     end
   end
 end
