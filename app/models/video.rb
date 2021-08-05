@@ -37,6 +37,10 @@ class Video < ApplicationRecord
     VideoStreamEvent.where(video: id, created_at: 24.hours.ago..Time.zone.now).sum(:duration).round
   end
 
+  def times_watched
+    VideoStreamEvent.where(video: id).select(:session_id).distinct.count
+  end
+
   def hourly_stream_time_last_24h
     query = <<~SQL.squish
       SELECT sum(duration), time_bucket_gapfill('1 hour', video_stream_events.created_at) AS period
