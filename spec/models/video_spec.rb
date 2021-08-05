@@ -94,9 +94,8 @@ RSpec.describe Video, type: :model do
     end
   end
 
-  describe 'gets the number of time a video has been watched' do
+  describe 'gets the number of times a video has been watched' do
     it 'returns the number of unique session_ids for a video' do
-      video_stream_event
       video_stream_event
       video_stream_event2
       video_stream_event4
