@@ -15,7 +15,7 @@ RSpec.describe VideoStatsController, type: :controller do
       end
 
       let(:valid_request) do
-        get :show, params: { video_id: video.public_id }, as: :json
+        get :show, params: { video_id: video.public_id, interval: '24hours', frequency: '1hour' }, as: :json
       end
 
       it 'returns a 200' do
