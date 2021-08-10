@@ -21,8 +21,10 @@ end
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id, created_at: 10.minutes.ago })
 end
 
-csv_text = File.read(Rails.root.join('db', 'geolocation.csv'))
-csv = CSV.parse(csv_text, :headers => true)
+csv_text = File.read(Rails.root.join('db/geolocation.csv'))
+csv = CSV.parse(csv_text, headers: true)
+locations = []
 csv.each do |row|
-  Geolocation.create!(row.to_hash)
+  locations << Geolocation.new(row.to_hash)
 end
+Geolocation.import! locations

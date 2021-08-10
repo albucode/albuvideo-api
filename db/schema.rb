@@ -57,8 +57,8 @@ ActiveRecord::Schema.define(version: 2021_08_10_192657) do
   end
 
   create_table "geolocations", force: :cascade do |t|
-    t.integer "ip_from"
-    t.integer "ip_to"
+    t.bigint "ip_from"
+    t.bigint "ip_to"
     t.string "country_code"
     t.string "country"
     t.string "region"

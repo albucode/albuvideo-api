@@ -3,8 +3,8 @@
 class CreateGeolocations < ActiveRecord::Migration[6.1]
   def change
     create_table :geolocations do |t|
-      t.integer :ip_from
-      t.integer :ip_to
+      t.integer :ip_from, limit: 8
+      t.integer :ip_to, limit: 8
       t.string :country_code
       t.string :country
       t.string :region
