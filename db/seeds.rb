@@ -18,3 +18,5 @@ end
 3.times do
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id, created_at: 10.minutes.ago })
 end
+
+
