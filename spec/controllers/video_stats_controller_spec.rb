@@ -25,7 +25,13 @@ RSpec.describe VideoStatsController, type: :controller do
       it "returns an array of hashes with keys 'sum'" do
         response = valid_request
         body = JSON.parse(response.body)
-        expect(body[0]).to have_key('sum')
+        expect(body['stream_time_data'][0]).to have_key('sum')
+      end
+
+      it "returns an array of hashes with keys 'count'" do
+        response = valid_request
+        body = JSON.parse(response.body)
+        expect(body['times_watched_data'][0]).to have_key('count')
       end
     end
 
