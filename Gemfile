@@ -11,6 +11,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 
 gem 'aasm'
+gem 'activerecord-import'
 gem 'down', '~> 5.0'
 gem 'm3u8'
 gem 'rack-cors'

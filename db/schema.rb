@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_052315) do
+ActiveRecord::Schema.define(version: 2021_08_10_192657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,20 @@ ActiveRecord::Schema.define(version: 2021_08_04_052315) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "geolocations", force: :cascade do |t|
+    t.bigint "ip_from"
+    t.bigint "ip_to"
+    t.string "country_code"
+    t.string "country"
+    t.string "region"
+    t.string "city"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_code"], name: "index_geolocations_on_country_code"
+    t.index ["ip_from"], name: "index_geolocations_on_ip_from"
+    t.index ["ip_to"], name: "index_geolocations_on_ip_to"
   end
 
   create_table "segments", force: :cascade do |t|
