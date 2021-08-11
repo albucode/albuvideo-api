@@ -53,4 +53,17 @@ class Video < ApplicationRecord
     SQL
     ActiveRecord::Base.connection.execute(query).to_a
   end
+
+  def times_watched_data(frequency, interval)
+    frequency = ActiveRecord::Base.connection.quote(frequency)
+    interval = ActiveRecord::Base.connection.quote(interval)
+    query = <<~SQL.squish
+      SELECT count(DISTINCT session_id), time_bucket_gapfill( #{frequency}, video_stream_events.created_at) AS period
+      FROM video_stream_events
+      LEFT JOIN videos v on video_stream_events.video_id = v.id
+      WHERE(public_id = '#{public_id}' AND video_stream_events.created_at BETWEEN NOW() - interval #{interval} AND NOW())
+      GROUP BY period;
+    SQL
+    ActiveRecord::Base.connection.execute(query).to_a
+  end
 end
