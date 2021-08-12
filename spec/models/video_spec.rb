@@ -90,7 +90,7 @@ RSpec.describe Video, type: :model do
       video_stream_event3
       my_array = video.stream_time_data('1hour', '24hours')
 
-      expect(my_array.find { |item| item[:sum] = 3.0 }).not_to be_nil
+      expect(my_array.find { |item| item['sum'] == 3.0 }).not_to be_nil
     end
   end
 
@@ -100,7 +100,7 @@ RSpec.describe Video, type: :model do
       video_stream_event3
       my_array = video.times_watched_data('1hour', '24hours')
 
-      expect(my_array.find { |item| item[:count] = 2 }).not_to be_nil
+      expect(my_array.find { |item| item['count'] == 2 }).not_to be_nil
     end
   end
 
