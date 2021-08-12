@@ -84,13 +84,23 @@ RSpec.describe Video, type: :model do
     end
   end
 
-  describe 'gets sums of hourly_stream_time_last_24h' do
-    it "returns the hourly sum of durations for a video's stream time for the last 24h" do
+  describe 'gets sums of stream_time' do
+    it "returns a sum of durations for a video's stream time during a certain interval" do
       video_stream_event2
       video_stream_event3
       my_array = video.stream_time_data('1hour', '24hours')
 
-      expect(my_array.find { |item| item[:sum] = 3.0 }).not_to be_nil
+      expect(my_array.find { |item| item['sum'] == 3.0 }).not_to be_nil
+    end
+  end
+
+  describe 'gets counts of times watched' do
+    it 'returns a count of times a video has been watched during a certain interval' do
+      video_stream_event2
+      video_stream_event3
+      my_array = video.times_watched_data('1hour', '24hours')
+
+      expect(my_array.find { |item| item['count'] == 2 }).not_to be_nil
     end
   end
 
