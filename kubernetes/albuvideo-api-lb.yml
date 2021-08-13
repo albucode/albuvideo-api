@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: albuvideo-api-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: albuvideo-api
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
