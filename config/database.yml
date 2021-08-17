@@ -81,6 +81,8 @@ test:
 #
 production:
   <<: *default
-  database: albuvideo_api_production
-  username: albuvideo_api
+  database: <%= ENV['ALBUVIDEO_API_DATABASE_DATABASE'] %>
+  username: <%= ENV['ALBUVIDEO_API_DATABASE_USERNAME'] %>
   password: <%= ENV['ALBUVIDEO_API_DATABASE_PASSWORD'] %>
+  host: <%= ENV['ALBUVIDEO_API_DATABASE_HOST'] %>
+  port: <%= ENV['ALBUVIDEO_API_DATABASE_PORT'] %>

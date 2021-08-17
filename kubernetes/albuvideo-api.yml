@@ -36,6 +36,22 @@ spec:
               value: "production"
             - name: SECRET_KEY_BASE
               value: "production-key"
+            - name: ALBUVIDEO_API_DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: albuvideo-secrets
+                  key: username
+            - name: ALBUVIDEO_API_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: albuvideo-secrets
+                  key: password
+            - name: ALBUVIDEO_API_DATABASE_DATABASE
+              value: "albuvideo_api_production"
+            - name: ALBUVIDEO_API_DATABASE_HOST
+              value: "postgres"
+            - name: ALBUVIDEO_API_DATABASE_PORT
+              value: "5432"
           ports:
             - containerPort: 3000
               protocol: TCP

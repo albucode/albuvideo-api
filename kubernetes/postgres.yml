@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: albuvideo-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: albuvideo-api
+      tier: database
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: albuvideo-api
+        tier: database
+    spec:
+      volumes:
+        - name: postgres-persistentvolume
+          persistentVolumeClaim:
+            claimName: postgres-persistentvolume-claim
+      containers:
+        - name: postgres
+          image: timescale/timescaledb-postgis:latest-pg13
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: albuvideo-secrets
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: albuvideo-secrets
+                  key: password
+            - name: POSTGRES_DB
+              value: albuvideo_api_production
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: postgres-persistentvolume
