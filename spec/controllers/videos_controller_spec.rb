@@ -7,6 +7,10 @@ RSpec.describe VideosController, type: :controller do
 
   let(:video) { FactoryBot.create(:video, user_id: user.id) }
 
+  let(:video_stream_event) do
+    FactoryBot.create(:video_stream_event, video_id: video.id, user_id: user.id, created_at: 10.minutes.ago)
+  end
+
   describe 'video creation' do
     before do
       sign_in(user)
@@ -96,6 +100,22 @@ RSpec.describe VideosController, type: :controller do
 
       it 'raises ActiveRedor::Record Not Found exception' do
         expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when video belongs to user' do
+      let(:valid_request) do
+        delete :destroy, params: { id: video.public_id }
+      end
+
+      before do
+        sign_in(user)
+      end
+
+      it 'does not delete associated video_stream_events and nullifies its video_id' do
+        video_stream_event
+        valid_request
+        expect(video_stream_event.reload.video_id).to be_nil
       end
     end
   end
