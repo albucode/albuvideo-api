@@ -11,11 +11,11 @@ RSpec.describe VideosController, type: :controller do
     FactoryBot.create(:video_stream_event, video_id: video.id, user_id: user.id, created_at: 10.minutes.ago)
   end
 
-  describe 'video creation' do
-    before do
-      sign_in(user)
-    end
+  before do
+    sign_in(user)
+  end
 
+  describe 'video creation' do
     context 'with valid params' do
       let(:valid_request) do
         source = 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4'
@@ -69,10 +69,6 @@ RSpec.describe VideosController, type: :controller do
 
   describe 'video show' do
     context 'with valid user' do
-      before do
-        sign_in(user)
-      end
-
       let(:valid_request) do
         get :show, params: { id: video.public_id }, as: :json
       end
@@ -94,10 +90,6 @@ RSpec.describe VideosController, type: :controller do
         delete :destroy, params: { id: video.public_id }
       end
 
-      before do
-        sign_in(user)
-      end
-
       it 'raises ActiveRedor::Record Not Found exception' do
         expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
       end
@@ -106,10 +98,6 @@ RSpec.describe VideosController, type: :controller do
     context 'when video belongs to user' do
       let(:valid_request) do
         delete :destroy, params: { id: video.public_id }
-      end
-
-      before do
-        sign_in(user)
       end
 
       it 'does not delete associated video_stream_events and nullifies its video_id' do
