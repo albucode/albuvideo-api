@@ -19,7 +19,7 @@ class Video < ApplicationRecord
 
   belongs_to :user
   has_many :variants, dependent: :destroy
-  has_many :video_stream_events, dependent: :destroy
+  has_many :video_stream_events, dependent: :nullify
   has_one_attached :source_file
 
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing

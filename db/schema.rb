@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_10_192657) do
+ActiveRecord::Schema.define(version: 2021_08_18_182946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 2021_08_10_192657) do
   end
 
   create_table "video_stream_events", force: :cascade do |t|
-    t.bigint "video_id", null: false
+    t.bigint "video_id"
     t.bigint "user_id", null: false
     t.float "duration", null: false
     t.datetime "created_at", precision: 6, null: false
