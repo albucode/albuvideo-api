@@ -1,15 +1,3 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: albuvideo-api
-spec:
-  type: ClusterIP
-  ports:
-    - port: 80
-      targetPort: 3000
-  selector:
-    app: albuvideo-api
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

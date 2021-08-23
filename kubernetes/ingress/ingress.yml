@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "albuvideo.com"
+    - host: "api.albuvideo.com"
       http:
         paths:
           - pathType: Prefix
