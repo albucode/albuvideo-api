@@ -21,6 +21,8 @@ class Video < ApplicationRecord
   has_many :variants, dependent: :destroy
   has_many :video_stream_events, dependent: :nullify
   has_one_attached :source_file
+  has_many :country_permissions
+  has_many :countries, through: :country_permissions
 
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing
 
