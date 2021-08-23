@@ -6,6 +6,7 @@ RSpec.describe VideosController, type: :controller do
   subject(:user) { FactoryBot.create(:user) }
 
   let(:video) { FactoryBot.create(:video, user_id: user.id) }
+  let(:country) { FactoryBot.create(:country) }
 
   let(:video_stream_event) do
     FactoryBot.create(:video_stream_event, video_id: video.id, user_id: user.id, created_at: 10.minutes.ago)
@@ -19,8 +20,8 @@ RSpec.describe VideosController, type: :controller do
     context 'with valid params' do
       let(:valid_request) do
         source = 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4'
-        post :create, params: { video: { title: 'VideoTitle', published: false, source: source } },
-                      as: :json
+        post :create, params: { video: { title: 'VideoTitle', published: false, source: source,
+                                         country_permission_type: 'allowed', country_ids: [country.id] } }, as: :json
       end
 
       it 'returns a 200' do
@@ -45,6 +46,12 @@ RSpec.describe VideosController, type: :controller do
         valid_request
 
         expect(AttachSourceFileJob).to have_been_enqueued.exactly(:once)
+      end
+
+      it 'creates a new country permission' do
+        expect do
+          valid_request
+        end.to change(CountryPermission, :count).by(1)
       end
     end
 
