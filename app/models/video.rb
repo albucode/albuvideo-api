@@ -21,10 +21,11 @@ class Video < ApplicationRecord
   has_many :variants, dependent: :destroy
   has_many :video_stream_events, dependent: :nullify
   has_one_attached :source_file
-  has_many :country_permissions
+  has_many :country_permissions, dependent: :destroy
   has_many :countries, through: :country_permissions
 
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing
+  enum country_permission_type: { allowed: 0, denied: 1 }
 
   validates :source, :status, presence: true
   validates :source, url: true

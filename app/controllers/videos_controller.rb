@@ -45,6 +45,6 @@ class VideosController < ApplicationController
   end
 
   def video_params
-    params.require(:video).permit(:title, :published, :source)
+    params.require(:video).permit(:title, :published, :source, :country_permission_type, country_ids: [])
   end
 end

@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 2021_08_23_181630) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "public_id", limit: 10, null: false
     t.bigint "user_id", null: false
-    t.string "country_permission_type"
+    t.integer "country_permission_type"
     t.index ["public_id"], name: "index_videos_on_public_id", unique: true
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
