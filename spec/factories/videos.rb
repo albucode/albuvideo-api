@@ -7,5 +7,6 @@ FactoryBot.define do
     status { 'ready' }
     source { 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4' }
     user
+    country_permission_type { 'allowed' }
   end
 end
