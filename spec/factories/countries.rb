@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :country do
-    name { 'Canada' }
-    code { 'ca' }
+    name { Faker::Address.country }
+    code { Faker::Address.country_code }
   end
 end
