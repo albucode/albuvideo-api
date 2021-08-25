@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :country_permission do
-    country { 1 }
-    video { 1 }
+    country
+    video
   end
 end
