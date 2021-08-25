@@ -27,7 +27,7 @@ class Video < ApplicationRecord
   enum status: { processing: 0, ready: 1, failed: 2 }, _default: :processing
   enum country_permission_type: { allowed: 0, denied: 1 }
 
-  validates :source, :status, :country_permission_type, presence: true
+  validates :source, :status, presence: true
   validates :source, url: true
 
   validates :published, inclusion: { in: [true, false] }
