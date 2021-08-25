@@ -57,10 +57,11 @@ ActiveRecord::Schema.define(version: 2021_08_23_181630) do
   end
 
   create_table "countries", force: :cascade do |t|
-    t.string "name"
-    t.string "code"
+    t.string "name", null: false
+    t.string "code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
   create_table "country_permissions", force: :cascade do |t|
