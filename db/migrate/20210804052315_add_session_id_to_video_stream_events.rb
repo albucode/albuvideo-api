@@ -2,6 +2,6 @@
 
 class AddSessionIdToVideoStreamEvents < ActiveRecord::Migration[6.1]
   def change
-    add_column :video_stream_events, :session_id, :string, null: false
+    add_column :video_stream_events, :session_id, :string
   end
 end
