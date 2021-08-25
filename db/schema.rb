@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_182946) do
+ActiveRecord::Schema.define(version: 2021_08_23_181630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,23 @@ ActiveRecord::Schema.define(version: 2021_08_18_182946) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_countries_on_code", unique: true
+  end
+
+  create_table "country_permissions", force: :cascade do |t|
+    t.bigint "country_id", null: false
+    t.bigint "video_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_country_permissions_on_country_id"
+    t.index ["video_id"], name: "index_country_permissions_on_video_id"
   end
 
   create_table "geolocations", force: :cascade do |t|
@@ -133,6 +150,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_182946) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "public_id", limit: 10, null: false
     t.bigint "user_id", null: false
+    t.integer "country_permission_type"
     t.index ["public_id"], name: "index_videos_on_public_id", unique: true
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
@@ -151,6 +169,8 @@ ActiveRecord::Schema.define(version: 2021_08_18_182946) do
   add_foreign_key "access_tokens", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "country_permissions", "countries"
+  add_foreign_key "country_permissions", "videos"
   add_foreign_key "segments", "variants"
   add_foreign_key "signature_keys", "users"
   add_foreign_key "variants", "videos"
