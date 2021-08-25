@@ -12,7 +12,8 @@ require 'csv'
 require 'json'
 
 user = User.create!({ email: 'a@a.com', password: 'asdasdasd' })
-video = Video.create!({ title: 'Video1', published: true, source: 'http://www.sourceseed.com', user_id: user.id })
+video = Video.create!({ title: 'Video1', published: true, source: 'http://www.sourceseed.com', user_id: user.id,
+                        country_permission_type: 'allowed' })
 
 3.times do
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id })
@@ -31,6 +32,9 @@ end
 Geolocation.import! locations
 
 countries_text = File.read(Rails.root.join('db/countries.json'))
-countries = JSON.parse(countries_text)
-
-countries.each { |key, value| Country.create(code: key, name: value) }
+json = JSON.parse(countries_text)
+countries = []
+json.each do |key, value|
+  countries << Country.new(code: key, name: value)
+end
+Country.import! countries
