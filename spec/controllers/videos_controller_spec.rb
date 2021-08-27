@@ -114,4 +114,31 @@ RSpec.describe VideosController, type: :controller do
       end
     end
   end
+
+  describe 'video update' do
+    context 'with valid params' do
+      let(:valid_request) do
+        put :update, params: { id: video.public_id, video: { title: 'New title', published: video.published,
+                                                             source: 'https://fakesource.com',
+                                                             country_permission_type: video.country_permission_type,
+                                                             country_ids: video.country_ids } }, as: :json
+      end
+
+      it 'returns a 200' do
+        valid_request
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'updated a video attributes' do
+        valid_request
+        expect(video.reload.title).to eq('New title')
+      end
+
+      it 'does not update video\s source' do
+        original_source = 'https://albuvideo.sfo3.digitaloceanspaces.com/dev/minimal-video-with-audio.mp4'
+        valid_request
+        expect(video.reload.source).to eq(original_source)
+      end
+    end
+  end
 end
