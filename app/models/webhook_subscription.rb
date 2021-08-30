@@ -8,4 +8,5 @@ class WebhookSubscription < ApplicationRecord
   validates :topic, :url, presence: true
   validates :url, url: true
   validates :topic, inclusion: { in: %w[video/ready video/failed] }
+  validates :url, uniqueness: { scope: %w[topic user_id], case_sensitive: false }
 end

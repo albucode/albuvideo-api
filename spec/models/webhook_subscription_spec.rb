@@ -14,4 +14,6 @@ RSpec.describe WebhookSubscription, type: :model do
   it { is_expected.to validate_presence_of(:topic) }
 
   it { is_expected.to validate_inclusion_of(:topic).in_array(%w[video/ready video/failed]) }
+
+  it { is_expected.to validate_uniqueness_of(:url).scoped_to(%w[topic user_id]).case_insensitive }
 end
