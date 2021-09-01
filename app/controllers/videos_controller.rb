@@ -38,6 +38,17 @@ class VideosController < ApplicationController
     end
   end
 
+  def update
+    if @video.update update_video_params
+      render json: @video
+    else
+      render(
+        json: { errors: @video.errors.full_messages },
+        status: :unprocessable_entity
+      )
+    end
+  end
+
   private
 
   def find_video
@@ -46,5 +57,9 @@ class VideosController < ApplicationController
 
   def video_params
     params.require(:video).permit(:title, :published, :source, :country_permission_type, country_ids: [])
+  end
+
+  def update_video_params
+    params.require(:video).permit(:title, :published, :country_permission_type, country_ids: [])
   end
 end
