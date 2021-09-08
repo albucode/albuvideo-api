@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root 'home#index'
+
   devise_for :users
 
   resource :current_user, only: :show, controller: :current_user
