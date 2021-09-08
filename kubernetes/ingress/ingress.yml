@@ -1,9 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hello-kubernetes-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  name: kubernetes-ingress
 spec:
   rules:
     - host: "api.albuvideo.com"

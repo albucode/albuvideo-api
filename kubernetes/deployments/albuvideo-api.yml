@@ -15,7 +15,7 @@ spec:
       containers:
         - name: albuvideo-api
           imagePullPolicy: Always
-          image: registry.digitalocean.com/albucode/albuvideo-api:latest
+          image: gcr.io/albucode/albuvideo-api:latest
           args: ["rails", "server"]
           env:
             - name: RAILS_LOG_TO_STDOUT
