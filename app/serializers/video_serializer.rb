@@ -12,5 +12,7 @@ class VideoSerializer < ActiveModel::Serializer
     object.public_id
   end
 
-  delegate :countries, to: :object
+  def countries
+    object.countries.map { |country| { label: country.name, value: country.id } }
+  end
 end
