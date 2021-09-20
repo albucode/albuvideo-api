@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :webhook_subscriptions
   resource  :stats, only: :show
   resources :countries, only: :index
+  resources :options, only: :index
 
   if Rails.env.development?
     require 'sidekiq/web'
