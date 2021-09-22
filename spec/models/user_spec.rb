@@ -9,10 +9,17 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to validate_presence_of(:password) }
-  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+  describe 'associations' do
+    it { is_expected.to have_many(:subscriptions) }
 
-  it { is_expected.to have_many(:subscriptions) }
-  it { is_expected.to have_many(:invoices) }
+    it { is_expected.to have_many(:invoices) }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:email) }
+
+    it { is_expected.to validate_presence_of(:password) }
+
+    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+  end
 end

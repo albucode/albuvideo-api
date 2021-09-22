@@ -3,9 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Subscription, type: :model do
-  it { is_expected.to belong_to(:user) }
+  describe 'associations' do
+    it { is_expected.to belong_to(:user) }
 
-  it { is_expected.to belong_to(:service) }
+    it { is_expected.to belong_to(:service) }
 
-  it { is_expected.to belong_to(:invoice) }
+    it { is_expected.to belong_to(:invoice) }
+  end
 end
