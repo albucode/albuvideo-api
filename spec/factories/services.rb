@@ -5,6 +5,6 @@ FactoryBot.define do
     name { Faker::Movie.title }
     category { 0 }
     description { Faker::Lorem.paragraph }
-    price { '9.99' }
+    price { Faker::Number.decimal(l_digits: 2) }
   end
 end

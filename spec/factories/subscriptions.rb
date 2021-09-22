@@ -5,5 +5,6 @@ FactoryBot.define do
     quantity { Faker::Number.decimal(l_digits: 2) }
     user
     service
+    invoice
   end
 end
