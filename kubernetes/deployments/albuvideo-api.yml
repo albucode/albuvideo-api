@@ -40,6 +40,10 @@ spec:
               value: "postgres"
             - name: ALBUVIDEO_API_DATABASE_PORT
               value: "5432"
+            - name: REDIS_URL
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
           ports:
             - containerPort: 3000
               protocol: TCP
