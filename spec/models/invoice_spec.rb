@@ -6,4 +6,8 @@ RSpec.describe Invoice, type: :model do
   it { is_expected.to belong_to(:user) }
 
   it { is_expected.to have_many(:subscriptions) }
+
+  it { is_expected.to validate_presence_of(:amount) }
+
+  it { validate_numericality_of(:amount).is_greater_than_or_equal_to(0) }
 end

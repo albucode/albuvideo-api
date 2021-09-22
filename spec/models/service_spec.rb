@@ -16,4 +16,8 @@ RSpec.describe Service, type: :model do
   it { is_expected.to validate_uniqueness_of(:name) }
 
   it { is_expected.to have_many(:subscriptions) }
+
+  it { validate_numericality_of(:price).is_greater_than(0) }
+
+  it { validate_numericality_of(:price).is_less_than(1_000) }
 end
