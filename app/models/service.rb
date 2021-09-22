@@ -5,4 +5,6 @@ class Service < ApplicationRecord
 
   validates :name, :category, :description, :price, presence: true
   validates :name, uniqueness: true
+
+  has_many :subscriptions, dependent: :nullify
 end
