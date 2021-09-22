@@ -6,7 +6,7 @@ RSpec.describe Service, type: :model do
   subject(:service) { FactoryBot.create(:service) }
 
   describe 'associations' do
-    it { is_expected.to have_many(:subscriptions) }
+    it { is_expected.to have_many(:invoice_items) }
   end
 
   describe 'validations' do

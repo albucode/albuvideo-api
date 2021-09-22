@@ -3,7 +3,7 @@
 class Service < ApplicationRecord
   enum category: { streaming: 0 }
 
-  has_many :subscriptions, dependent: :nullify
+  has_many :invoice_items, dependent: :nullify
 
   validates :name, :category, :description, :price, presence: true
   validates :name, uniqueness: true

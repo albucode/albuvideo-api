@@ -88,6 +88,18 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
     t.index ["ip_to"], name: "index_geolocations_on_ip_to"
   end
 
+  create_table "invoice_items", force: :cascade do |t|
+    t.float "quantity"
+    t.bigint "user_id", null: false
+    t.bigint "service_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "invoice_id"
+    t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+    t.index ["service_id"], name: "index_invoice_items_on_service_id"
+    t.index ["user_id"], name: "index_invoice_items_on_user_id"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.decimal "amount", precision: 15, scale: 2
     t.bigint "user_id", null: false
@@ -131,18 +143,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
     t.index ["public_id"], name: "index_signature_keys_on_public_id", unique: true
     t.index ["signature_key"], name: "index_signature_keys_on_signature_key", unique: true
     t.index ["user_id"], name: "index_signature_keys_on_user_id"
-  end
-
-  create_table "subscriptions", force: :cascade do |t|
-    t.float "quantity"
-    t.bigint "user_id", null: false
-    t.bigint "service_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "invoice_id"
-    t.index ["invoice_id"], name: "index_subscriptions_on_invoice_id"
-    t.index ["service_id"], name: "index_subscriptions_on_service_id"
-    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -208,12 +208,12 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "country_permissions", "countries"
   add_foreign_key "country_permissions", "videos"
+  add_foreign_key "invoice_items", "invoices"
+  add_foreign_key "invoice_items", "services"
+  add_foreign_key "invoice_items", "users"
   add_foreign_key "invoices", "users"
   add_foreign_key "segments", "variants"
   add_foreign_key "signature_keys", "users"
-  add_foreign_key "subscriptions", "invoices"
-  add_foreign_key "subscriptions", "services"
-  add_foreign_key "subscriptions", "users"
   add_foreign_key "variants", "videos"
   add_foreign_key "video_stream_events", "users"
   add_foreign_key "video_stream_events", "videos"
