@@ -10,6 +10,4 @@ class User < ApplicationRecord
   has_many :access_tokens, dependent: :destroy
   has_many :signature_keys, dependent: :destroy
   has_many :webhook_subscription, dependent: :destroy
-  has_many :invoice_items, dependent: :nullify
-  has_many :invoices, dependent: :nullify
 end
