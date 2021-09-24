@@ -103,9 +103,9 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
   create_table "invoices", force: :cascade do |t|
     t.decimal "amount", precision: 15, scale: 2
     t.bigint "user_id", null: false
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.string "public_id"
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.string "public_id", null: false
     t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
