@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_30_220629) do
+ActiveRecord::Schema.define(version: 2021_09_22_180003) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
   enable_extension "timescaledb"
 
@@ -87,6 +88,31 @@ ActiveRecord::Schema.define(version: 2021_08_30_220629) do
     t.index ["ip_to"], name: "index_geolocations_on_ip_to"
   end
 
+  create_table "invoice_items", force: :cascade do |t|
+    t.float "quantity", null: false
+    t.bigint "user_id", null: false
+    t.bigint "service_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "invoice_id"
+    t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+    t.index ["service_id"], name: "index_invoice_items_on_service_id"
+    t.index ["user_id"], name: "index_invoice_items_on_user_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.decimal "amount", precision: 15, scale: 2
+    t.bigint "user_id", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.string "public_id", null: false
+    t.integer "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["public_id"], name: "index_invoices_on_public_id", unique: true
+    t.index ["user_id"], name: "index_invoices_on_user_id"
+  end
+
   create_table "segments", force: :cascade do |t|
     t.bigint "variant_id", null: false
     t.integer "position", null: false
@@ -95,6 +121,16 @@ ActiveRecord::Schema.define(version: 2021_08_30_220629) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position", "variant_id"], name: "index_segments_on_position_and_variant_id", unique: true
     t.index ["variant_id"], name: "index_segments_on_variant_id"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "category", null: false
+    t.string "description", null: false
+    t.decimal "price", precision: 15, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_services_on_name", unique: true
   end
 
   create_table "signature_keys", force: :cascade do |t|
@@ -172,6 +208,10 @@ ActiveRecord::Schema.define(version: 2021_08_30_220629) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "country_permissions", "countries"
   add_foreign_key "country_permissions", "videos"
+  add_foreign_key "invoice_items", "invoices"
+  add_foreign_key "invoice_items", "services"
+  add_foreign_key "invoice_items", "users"
+  add_foreign_key "invoices", "users"
   add_foreign_key "segments", "variants"
   add_foreign_key "signature_keys", "users"
   add_foreign_key "variants", "videos"
