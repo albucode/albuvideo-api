@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_30_220629) do
+ActiveRecord::Schema.define(version: 2021_09_20_213523) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
   enable_extension "timescaledb"
 
@@ -95,6 +96,16 @@ ActiveRecord::Schema.define(version: 2021_08_30_220629) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position", "variant_id"], name: "index_segments_on_position_and_variant_id", unique: true
     t.index ["variant_id"], name: "index_segments_on_variant_id"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "category", null: false
+    t.string "description", null: false
+    t.decimal "price", precision: 15, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_services_on_name", unique: true
   end
 
   create_table "signature_keys", force: :cascade do |t|
