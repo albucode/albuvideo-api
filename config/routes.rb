@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resource  :stats, only: :show
   resources :countries, only: :index
   resources :options, only: :index
+  resources :services
 
   if Rails.env.development?
     require 'sidekiq/web'
