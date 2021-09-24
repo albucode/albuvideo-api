@@ -2,6 +2,7 @@
 
 class ServicesController < ApplicationController
   before_action :find_service, except: %i[index create]
+  before_action :admin?
   before_action :authenticate_user!
 
   def create
@@ -55,5 +56,9 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit(:name, :category, :description, :price)
+  end
+
+  def admin?
+    raise 'Only an admin has access to services' unless current_user.is_admin
   end
 end
