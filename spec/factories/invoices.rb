@@ -11,6 +11,6 @@ FactoryBot.define do
     user
     start_date { starting_date }
     end_date { ending_date }
-    status { 0 }
+    status { :pending }
   end
 end
