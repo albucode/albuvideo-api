@@ -1,0 +1,8 @@
+.git/
+kubernetes/
+log/
+tmp/
+storage/
+spec/
+.DS_Store
+master.key

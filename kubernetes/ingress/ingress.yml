@@ -14,3 +14,13 @@ spec:
                 name: albuvideo-api
                 port:
                   number: 80
+    - host: "stream.albuvideo.com"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: vproxy
+                port:
+                  number: 80
