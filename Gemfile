@@ -21,6 +21,7 @@ gem 'redis', '~> 4.0'
 gem 'rest-client'
 gem 'sidekiq'
 gem 'validate_url'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
