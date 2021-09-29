@@ -11,9 +11,10 @@
 require 'csv'
 require 'json'
 
-user = User.create!({ email: 'a@a.com', password: 'asdasdasd' })
+user = User.create!({ email: 'a@a.com', password: 'asdasdasd', is_admin: true })
 video = Video.create!({ title: 'Video1', published: true, source: 'http://www.sourceseed.com', user_id: user.id,
                         country_permission_type: 'allowed' })
+Service.create!({ name: 'Video streaming', category: 0, description: 'This is the description', price: 10.00 })
 
 3.times do
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id })
