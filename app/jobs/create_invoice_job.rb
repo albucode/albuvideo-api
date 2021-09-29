@@ -4,7 +4,14 @@ class CreateInvoiceJob < ApplicationJob
   queue_as :default
 
   def perform
-    invoice = Invoice.create!(start_date: DateTime.now, end_date: DateTime.now, user_id: 1, status: 0)
-    InvoiceItem.create!(service_id: 1, quantity: 1.0, invoice_id: invoice.id, user_id: 1, price: 9.99)
+    service = Service.find_by(category: 'streaming')
+    beginning_of_last_month = Time.zone.now.last_month.beginning_of_month
+    end_of_last_month = Time.zone.now.last_month.end_of_month
+    User.all.each do |user|
+      invoice = Invoice.create!(start_date: beginning_of_last_month, end_date: end_of_last_month, user_id: user.id,
+                                status: 0)
+      InvoiceItem.create!(service_id: service.id, quantity: 1.0, invoice_id: invoice.id, user_id: user.id,
+                          price: service.price)
+    end
   end
 end
