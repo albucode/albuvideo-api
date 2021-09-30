@@ -73,4 +73,37 @@ RSpec.describe ServicesController, type: :controller do
       end
     end
   end
+
+  describe 'service deletion' do
+    context 'when user is an admin' do
+      let(:valid_request) do
+        delete :destroy, params: { id: service.id }
+      end
+
+      before do
+        sign_in(user)
+      end
+
+      it 'deletes a service' do
+        service
+        expect do
+          valid_request
+        end.to change(Service, :count).by(-1)
+      end
+    end
+
+    context 'when user is not an admin' do
+      let(:valid_request) do
+        delete :destroy, params: { id: service.id }
+      end
+
+      before do
+        sign_in(user2)
+      end
+
+      it 'raises an exception' do
+        expect { valid_request }.to raise_exception('Only an admin has access to services')
+      end
+    end
+  end
 end
