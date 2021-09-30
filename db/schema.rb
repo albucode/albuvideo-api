@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_011307) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "invoice_id"
-    t.decimal "price", precision: 15, scale: 2, null: false
+    t.decimal "price", precision: 15, scale: 4, null: false
     t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
     t.index ["service_id"], name: "index_invoice_items_on_service_id"
     t.index ["user_id"], name: "index_invoice_items_on_user_id"
@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_011307) do
     t.string "name", null: false
     t.integer "category", null: false
     t.string "description", null: false
-    t.decimal "price", precision: 15, scale: 2, null: false
+    t.decimal "price", precision: 15, scale: 4, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_services_on_name", unique: true
