@@ -105,5 +105,37 @@ RSpec.describe ServicesController, type: :controller do
         expect { valid_request }.to raise_exception('Only an admin has access to services')
       end
     end
+
+    describe 'service update' do
+      let(:valid_request) do
+        post :update, params: { id: service.id, service: { name: 'NewServiceName' } }, as: :json
+      end
+
+      context 'when user is an admin' do
+        before do
+          sign_in(user)
+        end
+
+        it 'returns a 200' do
+          valid_request
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'updates a service' do
+          valid_request
+          expect(service.reload.name).to eq('NewServiceName')
+        end
+      end
+
+      context 'when user is not an admin' do
+        before do
+          sign_in(user2)
+        end
+
+        it 'raises an exception' do
+          expect { valid_request }.to raise_exception('Only an admin has access to services')
+        end
+      end
+    end
   end
 end
