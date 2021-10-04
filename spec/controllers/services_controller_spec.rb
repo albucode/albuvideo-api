@@ -137,5 +137,38 @@ RSpec.describe ServicesController, type: :controller do
         end
       end
     end
+
+    describe 'service read' do
+      let(:valid_request) do
+        post :show, params: { id: service.id }, as: :json
+      end
+
+      context 'when user is an admin' do
+        before do
+          sign_in(user)
+        end
+
+        it 'returns a 200' do
+          valid_request
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'shows a service' do
+          response = valid_request
+          body = JSON.parse(response.body)
+          expect(body['service']).to have_key('category')
+        end
+      end
+
+      context 'when user is not an admin' do
+        before do
+          sign_in(user2)
+        end
+
+        it 'raises an exception' do
+          expect { valid_request }.to raise_exception('Only an admin has access to services')
+        end
+      end
+    end
   end
 end
