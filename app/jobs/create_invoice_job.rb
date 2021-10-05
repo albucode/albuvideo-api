@@ -10,7 +10,9 @@ class CreateInvoiceJob < ApplicationJob
     User.all.each do |user|
       invoice = Invoice.create!(start_date: beginning_of_last_month, end_date: end_of_last_month, user_id: user.id,
                                 status: 0)
-      InvoiceItem.create!(service_id: service.id, quantity: previous_month_streaming_time(user.id, beginning_of_last_month, end_of_last_month), invoice_id: invoice.id, user_id: user.id,
+      InvoiceItem.create!(service_id: service.id,
+                          quantity: previous_month_streaming_time(user.id, beginning_of_last_month, end_of_last_month),
+                          invoice_id: invoice.id, user_id: user.id,
                           price: service.price)
     end
   end

@@ -34,11 +34,51 @@ RSpec.describe CreateInvoiceJob, type: :job do
     end.to change(InvoiceItem, :count).by(1)
   end
 
-  it 'calculates stream_time quantity' do
-    video_stream_event
-    video_stream_event2
-    described_class.new.perform_now
+  describe 'it saves the correct values' do
+    before do
+      video_stream_event
+      video_stream_event2
+      described_class.new.perform_now
+    end
 
-    expect(InvoiceItem.last.quantity).to eq(3)
+    context 'when invoice_item is created' do
+      it 'calculates stream_time quantity' do
+        expect(InvoiceItem.last.quantity).to eq(3)
+      end
+
+      it 'associates the right service' do
+        expect(InvoiceItem.last.service_id).to eq(service.id)
+      end
+
+      it 'associates the right user' do
+        expect(InvoiceItem.last.user_id).to eq(user.id)
+      end
+
+      it 'associates the right price' do
+        expect(InvoiceItem.last.price).to eq(service.price)
+      end
+
+      it 'associates the right invoice' do
+        expect(InvoiceItem.last.invoice_id).to eq(Invoice.last.id)
+      end
+    end
+
+    context 'when invoice is created' do
+      it 'calculates beginning_of_last_month' do
+        expect(Invoice.last.start_date).to eq(Time.zone.now.last_month.beginning_of_month)
+      end
+
+      it 'calculates end_of_last_month' do
+        expect(Invoice.last.end_date.to_i).to eq(Time.zone.now.last_month.end_of_month.to_i)
+      end
+
+      it 'associates the right user' do
+        expect(Invoice.last.user_id).to eq(user.id)
+      end
+
+      it 'associates the right status' do
+        expect(Invoice.last.status).to eq('pending')
+      end
+    end
   end
 end
