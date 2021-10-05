@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :countries, only: :index
   resources :options, only: :index
   resources :services
+  resources :invoices, only: :index
 
   if Rails.env.development?
     require 'sidekiq/web'
