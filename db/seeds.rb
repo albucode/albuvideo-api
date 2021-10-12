@@ -14,7 +14,8 @@ require 'json'
 user = User.create!({ email: 'a@a.com', password: 'asdasdasd', is_admin: true })
 video = Video.create!({ title: 'Video1', published: true, source: 'http://www.sourceseed.com', user_id: user.id,
                         country_permission_type: 'allowed' })
-Service.create!({ name: 'Video streaming', category: :streaming, description: 'This is the description', price: 0.0001 })
+Service.create!({ name: 'Video streaming', category: :streaming, description: 'This is the description',
+                  price: 0.0001 })
 
 3.times do
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id })
@@ -50,4 +51,3 @@ InvoiceItem.create!(service_id: service.id,
                     quantity: 10,
                     invoice_id: invoice.id, user_id: user.id,
                     price: service.price)
-

@@ -7,4 +7,3 @@ class InvoiceItemSerializer < ActiveModel::Serializer
     object.public_id
   end
 end
-
