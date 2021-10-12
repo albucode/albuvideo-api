@@ -43,7 +43,7 @@ RSpec.describe CreateInvoiceJob, type: :job do
 
     context 'when invoice_item is created' do
       it 'calculates stream_time quantity' do
-        expect(InvoiceItem.last.quantity).to eq(3)
+        expect(InvoiceItem.last.quantity).to eq(0.05)
       end
 
       it 'associates the right service' do
