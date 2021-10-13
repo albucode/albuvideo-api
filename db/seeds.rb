@@ -11,9 +11,11 @@
 require 'csv'
 require 'json'
 
-user = User.create!({ email: 'a@a.com', password: 'asdasdasd' })
+user = User.create!({ email: 'a@a.com', password: 'asdasdasd', is_admin: true })
 video = Video.create!({ title: 'Video1', published: true, source: 'http://www.sourceseed.com', user_id: user.id,
                         country_permission_type: 'allowed' })
+Service.create!({ name: 'Video streaming', category: :streaming, description: 'This is the description',
+                  price: 0.0001 })
 
 3.times do
   VideoStreamEvent.create!({ duration: 2.5, video_id: video.id, user_id: user.id })
@@ -38,3 +40,14 @@ json.each do |key, value|
   countries << Country.new(code: key, name: value)
 end
 Country.import! countries
+
+service = Service.find_by(category: 'streaming')
+beginning_of_last_month = Time.zone.now.last_month.beginning_of_month
+end_of_last_month = Time.zone.now.last_month.end_of_month
+
+invoice = Invoice.create!(start_date: beginning_of_last_month, end_date: end_of_last_month, user_id: user.id,
+                          status: :pending)
+InvoiceItem.create!(service_id: service.id,
+                    quantity: 10,
+                    invoice_id: invoice.id, user_id: user.id,
+                    price: service.price)

@@ -6,5 +6,6 @@ FactoryBot.define do
     user
     service
     invoice
+    price { Faker::Number.decimal(r_digits: 2) }
   end
 end

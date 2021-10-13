@@ -8,5 +8,7 @@ class Invoice < ApplicationRecord
 
   enum status: { pending: 0, paid: 1 }, _default: :pending
 
-  validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  def invoice_total
+    invoice_items.map(&:item_total).sum
+  end
 end

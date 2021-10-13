@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Service < ApplicationRecord
-  enum category: { streaming: 0 }
+  enum category: { streaming: 0, other: 1 }
 
   has_many :invoice_items, dependent: :nullify
 

@@ -6,7 +6,7 @@ class CreateServices < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.integer :category, null: false
       t.string :description, null: false
-      t.decimal :price, precision: 15, scale: 2, null: false
+      t.decimal :price, precision: 15, scale: 4, null: false
 
       t.timestamps
     end

@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_180003) do
+ActiveRecord::Schema.define(version: 2021_10_12_184230) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "citext"
   enable_extension "plpgsql"
   enable_extension "timescaledb"
 
@@ -95,13 +94,15 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "invoice_id"
+    t.decimal "price", precision: 15, scale: 4, null: false
+    t.string "public_id", limit: 10, null: false
     t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+    t.index ["public_id"], name: "index_invoice_items_on_public_id", unique: true
     t.index ["service_id"], name: "index_invoice_items_on_service_id"
     t.index ["user_id"], name: "index_invoice_items_on_user_id"
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.decimal "amount", precision: 15, scale: 2
     t.bigint "user_id", null: false
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
@@ -127,7 +128,7 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
     t.string "name", null: false
     t.integer "category", null: false
     t.string "description", null: false
-    t.decimal "price", precision: 15, scale: 2, null: false
+    t.decimal "price", precision: 15, scale: 4, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_services_on_name", unique: true
@@ -151,6 +152,7 @@ ActiveRecord::Schema.define(version: 2021_09_22_180003) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
