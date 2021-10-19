@@ -4,6 +4,7 @@ class ServicesController < ApplicationController
   before_action :find_service, except: %i[index create]
   before_action :admin?
   before_action :authenticate_user!
+  rescue_from StandardError, with: :deny_access
 
   def create
     service = Service.new service_params
@@ -59,6 +60,12 @@ class ServicesController < ApplicationController
   end
 
   def admin?
-    raise 'Only an admin has access to services' unless current_user.is_admin
+    raise StandardError unless current_user.is_admin
+  end
+
+  def deny_access
+    render(
+      json: { error: 'Only an admin has access to services' }
+    )
   end
 end
