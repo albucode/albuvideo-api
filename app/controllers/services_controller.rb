@@ -4,7 +4,8 @@ class ServicesController < ApplicationController
   before_action :find_service, except: %i[index create]
   before_action :admin?
   before_action :authenticate_user!
-  rescue_from StandardError, with: :deny_access
+  rescue_from NotAdminError, with: :deny_access
+  rescue_from ActiveRecord::RecordNotFound, with: :service_not_found
 
   def create
     service = Service.new service_params
@@ -60,12 +61,18 @@ class ServicesController < ApplicationController
   end
 
   def admin?
-    raise StandardError unless current_user.is_admin
+    raise NotAdminError unless current_user.is_admin
   end
 
   def deny_access
     render(
       json: { error: 'Only an admin has access to services' }
+    )
+  end
+
+  def service_not_found
+    render(
+      json: { error: 'This record does not exist' }
     )
   end
 end
