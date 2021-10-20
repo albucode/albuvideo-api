@@ -36,8 +36,10 @@ RSpec.describe ServicesController, type: :controller do
         sign_in(user2)
       end
 
-      it 'raises ActiveRecord::RecordNotFoundexception' do
-        expect { valid_request }.to raise_exception('Only an admin has access to services')
+      it 'displays an error message' do
+        response = valid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'Only an admin has access to services' })
       end
     end
 
@@ -101,8 +103,10 @@ RSpec.describe ServicesController, type: :controller do
         sign_in(user2)
       end
 
-      it 'raises an exception' do
-        expect { valid_request }.to raise_exception('Only an admin has access to services')
+      it 'displays an error message' do
+        response = valid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'Only an admin has access to services' })
       end
     end
 
@@ -132,8 +136,10 @@ RSpec.describe ServicesController, type: :controller do
           sign_in(user2)
         end
 
-        it 'raises an exception' do
-          expect { valid_request }.to raise_exception('Only an admin has access to services')
+        it 'displays an error message' do
+          response = valid_request
+          body = JSON.parse(response.body)
+          expect(body).to match({ 'error' => 'Only an admin has access to services' })
         end
       end
     end
@@ -165,8 +171,10 @@ RSpec.describe ServicesController, type: :controller do
           sign_in(user2)
         end
 
-        it 'raises an exception' do
-          expect { valid_request }.to raise_exception('Only an admin has access to services')
+        it 'displays an error message' do
+          response = valid_request
+          body = JSON.parse(response.body)
+          expect(body).to match({ 'error' => 'Only an admin has access to services' })
         end
       end
     end

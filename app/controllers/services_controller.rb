@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
-  before_action :find_service, except: %i[index create]
   before_action :admin?
   before_action :authenticate_user!
+  before_action :find_service, except: %i[index create]
   rescue_from NotAdminError, with: :deny_access
   rescue_from ActiveRecord::RecordNotFound, with: :service_not_found
 
