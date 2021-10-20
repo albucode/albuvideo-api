@@ -44,8 +44,10 @@ RSpec.describe VideoStatsController, type: :controller do
         get :show, params: { video_id: video.public_id }, as: :json
       end
 
-      it 'returns a 404 not_found error message' do
-        expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
+      it 'displays an error message' do
+        response = invalid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'This record does not exist' })
       end
     end
   end
