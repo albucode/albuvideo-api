@@ -2,10 +2,11 @@
 
 ## Setup
 
-#$# TimescaleDB - PostgreSQL extension for time-series
+### Ruby version
 
-Ruby version
 Make sure you have ruby version 3.0.1 installed
+
+### TimescaleDB - PostgreSQL extension for time-series
 
 Install TimescaleDB
 ```shell
@@ -42,3 +43,8 @@ Run test suite
 ```shell
 rspec
 ```
+
+Background jobs
+
+To view development background jobs status
+http://localhost:3000/sidekiq/
