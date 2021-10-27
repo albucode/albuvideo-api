@@ -12,13 +12,13 @@ class ApplicationController < ActionController::Base
 
   def deny_access
     render(
-      json: { error: 'Only an admin has access to this record' }
+      json: { error: 'Only an admin has access to this record' }, status: :unauthorized
     )
   end
 
   def record_not_found
     render(
-      json: { error: 'This record does not exist' }
+      json: { error: 'This record does not exist' }, status: :not_found
     )
   end
 end
