@@ -4,6 +4,9 @@
 
 #$# TimescaleDB - PostgreSQL extension for time-series
 
+Ruby version
+Make sure you have ruby version 3.0.1 installed
+
 Install TimescaleDB
 ```shell
 brew tap guialbuk/homebrew-tap
@@ -19,4 +22,23 @@ timescaledb_move.sh
 Restart PostgreSQL server
 ```shell
 brew services restart postgresql
+```
+
+Getting Started
+
+Install dependencies 
+```shell
+bundle install
+```
+Create, migrate and seed your db rails
+```shell
+rails db:create db:migrate db:seed
+```
+Start server
+```shell
+foreman start
+```
+Run test suite
+```shell
+rspec
 ```
