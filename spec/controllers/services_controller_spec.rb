@@ -36,8 +36,10 @@ RSpec.describe ServicesController, type: :controller do
         sign_in(user2)
       end
 
-      it 'raises ActiveRecord::RecordNotFoundexception' do
-        expect { valid_request }.to raise_exception('Only an admin has access to services')
+      it 'displays an error message' do
+        response = valid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'Only an admin has access to this record' })
       end
     end
 
@@ -80,6 +82,10 @@ RSpec.describe ServicesController, type: :controller do
         delete :destroy, params: { id: service.id }
       end
 
+      let(:invalid_request) do
+        delete :destroy, params: { id: rand }
+      end
+
       before do
         sign_in(user)
       end
@@ -89,6 +95,12 @@ RSpec.describe ServicesController, type: :controller do
         expect do
           valid_request
         end.to change(Service, :count).by(-1)
+      end
+
+      it 'matches an error message' do
+        response = invalid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'This record does not exist' })
       end
     end
 
@@ -101,14 +113,20 @@ RSpec.describe ServicesController, type: :controller do
         sign_in(user2)
       end
 
-      it 'raises an exception' do
-        expect { valid_request }.to raise_exception('Only an admin has access to services')
+      it 'displays an error message' do
+        response = valid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'Only an admin has access to this record' })
       end
     end
 
     describe 'service update' do
       let(:valid_request) do
         post :update, params: { id: service.id, service: { name: 'NewServiceName' } }, as: :json
+      end
+
+      let(:invalid_request) do
+        post :update, params: { id: rand, service: { name: 'NewServiceName' } }, as: :json
       end
 
       context 'when user is an admin' do
@@ -125,6 +143,12 @@ RSpec.describe ServicesController, type: :controller do
           valid_request
           expect(service.reload.name).to eq('NewServiceName')
         end
+
+        it 'matches an error message' do
+          response = invalid_request
+          body = JSON.parse(response.body)
+          expect(body).to match({ 'error' => 'This record does not exist' })
+        end
       end
 
       context 'when user is not an admin' do
@@ -132,8 +156,10 @@ RSpec.describe ServicesController, type: :controller do
           sign_in(user2)
         end
 
-        it 'raises an exception' do
-          expect { valid_request }.to raise_exception('Only an admin has access to services')
+        it 'displays an error message' do
+          response = valid_request
+          body = JSON.parse(response.body)
+          expect(body).to match({ 'error' => 'Only an admin has access to this record' })
         end
       end
     end
@@ -141,6 +167,10 @@ RSpec.describe ServicesController, type: :controller do
     describe 'service read' do
       let(:valid_request) do
         post :show, params: { id: service.id }, as: :json
+      end
+
+      let(:invalid_request) do
+        post :show, params: { id: rand }, as: :json
       end
 
       context 'when user is an admin' do
@@ -158,6 +188,12 @@ RSpec.describe ServicesController, type: :controller do
           body = JSON.parse(response.body)
           expect(body['service']).to have_key('category')
         end
+
+        it 'displays an error message' do
+          response = invalid_request
+          body = JSON.parse(response.body)
+          expect(body).to match({ 'error' => 'This record does not exist' })
+        end
       end
 
       context 'when user is not an admin' do
@@ -165,8 +201,10 @@ RSpec.describe ServicesController, type: :controller do
           sign_in(user2)
         end
 
-        it 'raises an exception' do
-          expect { valid_request }.to raise_exception('Only an admin has access to services')
+        it 'displays an error message' do
+          response = valid_request
+          body = JSON.parse(response.body)
+          expect(body).to match({ 'error' => 'Only an admin has access to this record' })
         end
       end
     end

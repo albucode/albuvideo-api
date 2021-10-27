@@ -97,8 +97,10 @@ RSpec.describe VideosController, type: :controller do
         delete :destroy, params: { id: video.public_id }
       end
 
-      it 'raises ActiveRedor::Record Not Found exception' do
-        expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
+      it 'displays an error message' do
+        response = invalid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'This record does not exist' })
       end
     end
 

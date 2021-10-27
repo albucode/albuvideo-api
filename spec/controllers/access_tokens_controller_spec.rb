@@ -63,8 +63,10 @@ RSpec.describe AccessTokensController, type: :controller do
         sign_in(user)
       end
 
-      it 'raises ActiveRecord::RecordNotFoundexception' do
-        expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
+      it 'displays an error message' do
+        response = invalid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'This record does not exist' })
       end
     end
   end

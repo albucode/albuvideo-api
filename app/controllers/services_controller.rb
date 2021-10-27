@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
-  before_action :find_service, except: %i[index create]
   before_action :admin?
   before_action :authenticate_user!
+  before_action :find_service, except: %i[index create]
 
   def create
     service = Service.new service_params
@@ -59,6 +59,6 @@ class ServicesController < ApplicationController
   end
 
   def admin?
-    raise 'Only an admin has access to services' unless current_user.is_admin
+    raise NotAdminError unless current_user.is_admin
   end
 end

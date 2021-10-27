@@ -65,8 +65,10 @@ RSpec.describe WebhookSubscriptionsController, type: :controller do
         sign_in(user)
       end
 
-      it 'raises ActiveRecord::RecordNotFound exception' do
-        expect { invalid_request }.to raise_exception(ActiveRecord::RecordNotFound)
+      it 'displays an error message' do
+        response = invalid_request
+        body = JSON.parse(response.body)
+        expect(body).to match({ 'error' => 'This record does not exist' })
       end
     end
   end
